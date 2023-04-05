@@ -5,11 +5,12 @@ namespace Game.Scripts.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        public NavMeshAgent agent;
+        [Space]
+        public NavMeshAgent agent = null;
 
-        public void Move(Vector3 direction)
+        public void Move(Vector3 offset)
         {
-            agent.Move(direction);
+            agent.Move(offset);
         }
 
         public void View(Vector3 direction)
