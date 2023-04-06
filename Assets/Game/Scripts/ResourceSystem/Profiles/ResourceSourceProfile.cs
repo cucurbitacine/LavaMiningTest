@@ -20,9 +20,11 @@ namespace Game.Scripts.ResourceSystem.Profiles
         public float timeoutMining = 12f;
 
         [Header("Resource Settings")]
-        public ResourceInfo outputResource = new ResourceInfo();
+        [Min(0)]
+        public int amountOutput = 1;
+        public ResourceEntity resourcePrefabOutput = null;
         [Space]
-        public List<ResourceInfo> inputResources = new List<ResourceInfo>();
+        public List<RequiredResource> requiredResources = new List<RequiredResource>();
 
         [Header("Source information - read only")]
         [SerializeField]
@@ -37,14 +39,14 @@ namespace Game.Scripts.ResourceSystem.Profiles
             var periodMining = durationMining + timeoutMining;
             resourcePerSecond = amountMaxMining / periodMining;
 
-            foreach (var input in inputResources)
+            foreach (var input in requiredResources)
             {
-                if (input != null) input.displayName = $"[{input.amount}] {input.resourcePrefab?.name}";
+                if (input != null) input.displayName = $"[{input.amount}] {input.profile?.name}";
             }
         }
 
         [Serializable]
-        public class ResourceInfo
+        public class RequiredResource
         {
             [HideInInspector]
             [SerializeField]
@@ -52,7 +54,7 @@ namespace Game.Scripts.ResourceSystem.Profiles
             
             [Space]
             [Min(0)] public int amount = 1;
-            public ResourceEntity resourcePrefab = null;
+            public ResourceProfile profile = null;
         }
     }
 }

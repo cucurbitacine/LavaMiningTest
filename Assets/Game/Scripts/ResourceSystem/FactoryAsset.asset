@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9593ee1a5bbe4f42b492750d5227f74e, type: 3}
   m_Name: FactoryAsset
   m_EditorClassIdentifier: 
-  displayGuid: 006c955d-b829-4fe6-9a10-ac11db94162a
+  displayGuid: adfc9844-148c-4def-a77c-a992762a38f1
   amountMaxMining: 3
   frequencyMining: 1
   timeoutMining: 12
-  outputResource:
-    displayName: 
-    amount: 1
-    resourcePrefab: {fileID: 0}
-  inputResources: []
+  amountOutput: 1
+  resourcePrefabOutput: {fileID: 7522046349193836608, guid: 7aa72457bb3ea974f8d1cdea15be793c,
+    type: 3}
+  requiredResources: []
   resourcePerSecond: 0.2

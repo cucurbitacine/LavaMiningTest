@@ -1,6 +1,8 @@
 using System.Collections;
+using DG.Tweening;
 using Game.Scripts.ResourceSystem.Profiles;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Scripts.ResourceSystem.Entities
 {
@@ -15,58 +17,110 @@ namespace Game.Scripts.ResourceSystem.Entities
         [Min(0)]
         public int amountMining = 0;
 
-        private float _timeoutDelta = 0f;
-        private Coroutine _recovering = null;
+        [Space]
+        public UnityEvent<ResourceSourceEntity> onWasMined = new UnityEvent<ResourceSourceEntity>();
+
+        private float _timeoutWaitingDelta = 0f;
+        private float _timeoutRecoveryDelta = 0f;
         
-        public void Mine()
+        private Coroutine _recovering = null;
+        private Coroutine _waiting = null;
+
+        public bool Mine()
         {
-            if (!active) return;
+            if (!active) return false;
+
+            if (_timeoutWaitingDelta > 0) return false;
+
+            if (_timeoutRecoveryDelta > 0) return false;
             
             amountMining--;
-
+            
             if (amountMining == 0)
             {
                 Recovering();
             }
             else
             {
-                DropResources();
+                Waiting();
             }
+
+            onWasMined.Invoke(this);
+            
+            return true;
         }
 
-        private void DropResources()
-        {
-            // profile.outputResource.resourcePrefab
-            
-            Debug.Log("Drop Resource");
-        }
-        
         private void Recovering()
         {
             if (_recovering != null) StopCoroutine(_recovering);
             _recovering = StartCoroutine(_Recovering());
         }
 
+        private void Waiting()
+        {
+            if (_waiting != null) StopCoroutine(_waiting);
+            _waiting = StartCoroutine(_Waiting());
+        }
+        
         private IEnumerator _Recovering()
         {
-            active = false;
+            _timeoutRecoveryDelta = profile.timeoutMining;
             
-            _timeoutDelta = profile.timeoutMining;
-            
-            while (_timeoutDelta > 0)
+            while (_timeoutRecoveryDelta > 0)
             {
-                _timeoutDelta -= Time.deltaTime;
+                _timeoutRecoveryDelta -= Time.deltaTime;
                 yield return null;
             }
 
             amountMining = profile.amountMaxMining;
-            
-            active = true;
         }
 
+        private IEnumerator _Waiting()
+        {
+            _timeoutWaitingDelta = 1f / profile.frequencyMining;
+            
+            while (_timeoutWaitingDelta > 0)
+            {
+                _timeoutWaitingDelta -= Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        public void AnimationDrop(ResourceSourceEntity source)
+        {
+            var resource = Instantiate(source.profile.resourcePrefabOutput);
+            StartCoroutine(_AnimationDrop(resource));
+        }
+        
+        public float heightDrop = 2f;
+        public float radiusDrop = 2f;
+        
+        private IEnumerator _AnimationDrop(ResourceEntity resource)
+        {
+            var startPoint = transform.position + Vector3.up * heightDrop;
+            var dropPoint = transform.position +
+                            radiusDrop * Vector3.ProjectOnPlane(Random.onUnitSphere, Vector3.up).normalized;
+            
+            resource.collectable = false;
+            resource.transform.position = startPoint;
+            
+            var duration = 1f;
+            resource.transform.DOJump(dropPoint, 1, 3, duration);
+            resource.transform.DOShakeScale(duration);
+            
+            yield return new WaitForSeconds(duration);
+            
+            resource.collectable = true;
+        }
+        
         private void OnEnable()
         {
             amountMining = profile.amountMaxMining;
+        }
+
+        private void OnDisable()
+        {
+            amountMining = 0;
         }
     }
 }

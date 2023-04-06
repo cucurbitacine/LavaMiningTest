@@ -1,66 +1,130 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Game.Scripts.ResourceSystem.Entities;
 using Game.Scripts.ResourceSystem.Profiles;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Scripts.ResourceSystem.Controllers
 {
     public class ResourceInventory : MonoBehaviour
     {
-        public List<InventoryItem> items = new List<InventoryItem>();
+        public UnityEvent<ResourceEntity> onPutted = new UnityEvent<ResourceEntity>();
+        public UnityEvent<ResourceEntity> onPicked = new UnityEvent<ResourceEntity>();
 
-        public void Put(ResourceEntity resource)
+        public readonly Dictionary<ResourceProfile, Queue<ResourceEntity>> items = new Dictionary<ResourceProfile, Queue<ResourceEntity>>();
+
+        public bool Contains(params ResourceSourceProfile.RequiredResource[] required)
         {
-            var item = items.FirstOrDefault(i => i.profile == resource.profile);
-
-            if (item == null)
+            return required.All(r => r.amount <= CountResource(r.profile));
+        }
+        
+        public int CountResource(ResourceProfile profile)
+        {
+            if (items.TryGetValue(profile, out var queue))
             {
-                item = new InventoryItem(resource.profile);
-                items.Add(item);
+                return queue.Count;
             }
 
-            item.resources.Add(resource);
+            return 0;
+        }
+        
+        public void Put(ResourceEntity resource)
+        {
+            if (!items.TryGetValue(resource.profile, out var queue))
+            {
+                queue = new Queue<ResourceEntity>();
+                items.Add(resource.profile, queue);
+            }
+
+            if (queue.Contains(resource))
+            {
+                return;
+            }
             
-            resource.gameObject.SetActive(false);
+            queue.Enqueue(resource);
+            
+            onPutted.Invoke(resource);
         }
 
         public bool TryPick(ResourceProfile profile, out ResourceEntity resource)
         {
-            var item = items.FirstOrDefault(i => i.profile == profile);
-
-            if (item != null && item.resources.Count > 0)
+            if (items.TryGetValue(profile, out var queue))
             {
-                resource = item.resources[0];
-                item.resources.RemoveAt(0);
-                return true;
+                if (queue.TryDequeue(out resource))
+                {
+                    onPicked.Invoke(resource);
+                    
+                    return true;
+                }
             }
 
             resource = null;
+            
             return false;
         }
 
-        private void OnValidate()
+        public bool TryPick(ResourceSourceProfile.RequiredResource[] required, List<ResourceEntity> resources)
         {
-            foreach (var item in items)
+            if (!Contains(required)) return false;
+            
+            resources.Clear();
+
+            foreach (var r in required)
             {
-                if (item != null) item.displayName = $"[{item.resources.Count}] {item.profile.name}";
+                for (var i = 0; i < r.amount; i++)
+                {
+                    if (TryPick(r.profile, out var resource))
+                    {
+                        resources.Add(resource);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
             }
+
+            return true;
+        }
+
+        public void AnimationPut(ResourceEntity resource)
+        {
+            StartCoroutine(_AnimationPut(resource));
+        }
+        
+        private IEnumerator _AnimationPut(ResourceEntity resource)
+        {
+            resource.collectable = false;
+            
+            var duration = 1f;
+
+            resource.transform.DOJump(transform.position, 1, 3, duration);
+            resource.transform.DOShakeScale(duration);
+            yield return new WaitForSeconds(duration);
+            
+            resource.gameObject.SetActive(false);
+        }
+        
+#if UNITY_EDITOR
+        [SerializeField] private List<InventoryItem> _displayItems = new List<InventoryItem>();
+
+        private void Update()
+        {
+            _displayItems.Clear();
+            _displayItems.AddRange(items.Keys.Select(k => new InventoryItem()
+                { profileName = k.name, amount = items[k].Count }));
         }
 
         [Serializable]
-        public class InventoryItem
+        internal class InventoryItem
         {
-            [HideInInspector] [SerializeField] internal string displayName = string.Empty;
-            
-            public ResourceProfile profile = null;
-            public List<ResourceEntity> resources = new List<ResourceEntity>();
-
-            public InventoryItem(ResourceProfile profile)
-            {
-                this.profile = profile;
-            }
+            public string profileName = string.Empty;
+            public int amount = 0;
         }
+#endif
     }
 }

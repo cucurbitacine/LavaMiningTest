@@ -1,97 +1,59 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
-using Game.Scripts.ResourceSystem.Entities;
+﻿using Game.Scripts.ResourceSystem.Entities;
 using Game.Scripts.Tools;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Scripts.ResourceSystem.Controllers
 {
-    [RequireComponent(typeof(SphereCollider))]
     public class ResourceCollector : MonoBehaviour
     {
+        public bool active = true;
+        
+        [Space]
         [Min(0f)]
         public float radiusCollecting = 3f;
-
+        public LayerMask resourceLayers = 1;
+        public QueryTriggerInteraction interaction = QueryTriggerInteraction.UseGlobal;
         [Space]
-        public ResourceInventory inventory = null;
-        public List<ResourceEntity> resources = new List<ResourceEntity>();
-
-        private  SphereCollider _sphereCollect = null;
+        public UnityEvent<ResourceEntity> onResourceCollected = new UnityEvent<ResourceEntity>();
         
         private readonly ComponentCache<Collider, ResourceEntity> _cache = new ComponentCache<Collider, ResourceEntity>();
+        private readonly Collider[] _overlap = new Collider[CountMaxOverlaps];
+
+        private const ushort CountMaxOverlaps = 32;
         
         public void Collect(ResourceEntity resource)
         {
-            // Collect
             resource.collectable = false;
-            StartCoroutine(_Collecting(resource));
-        }
-
-        public float duration = 3f;
-        
-        private IEnumerator _Collecting(ResourceEntity resource)
-        {
-            yield return null;
             
-            resources.Remove(resource);
-
-            var delay = duration;
-
-            var trg = resource.transform;
-
-            trg.DOJump(trg.position, 1, 2, delay);
-            trg.DOShakeScale(delay);
-            trg.DOShakeRotation(delay);
-            
-            yield return new WaitForSeconds(delay);
-            
-            inventory.Put(resource);
+            onResourceCollected.Invoke(resource);
         }
         
-        private void Awake()
+        private void Collecting()
         {
-            if (inventory == null) inventory = GetComponent<ResourceInventory>();
-            
-            _sphereCollect = GetComponent<SphereCollider>();
-        }
+            var center = transform.position;
+            var count = Physics.OverlapSphereNonAlloc(center, radiusCollecting, _overlap, resourceLayers, interaction);
 
-        private void Update()
-        {
-            foreach (var resource in resources)
+            for (var i = 0; i < count; i++)
             {
-                if (resource.collectable)
+                if (_cache.TryGetComponent(_overlap[i], out var res))
                 {
-                    Collect(resource);
+                    if (res.collectable)
+                    {
+                        Collect(res);
+                    }
                 }
             }
         }
-
-        private void OnValidate()
-        {
-            if (_sphereCollect == null) _sphereCollect = GetComponent<SphereCollider>();
-            if (_sphereCollect != null) _sphereCollect.radius = radiusCollecting;
-        }
         
-        private void OnTriggerEnter(Collider other)
+        private void FixedUpdate()
         {
-            if (_cache.TryGetComponent(other, out var resource))
-            {
-                resources.Add(resource);
-            }
+            if (active) Collecting();
         }
 
-        private void OnTriggerExit(Collider other)
+        private void OnDrawGizmos()
         {
-            if (_cache.TryGetComponent(other, out var resource))
-            {
-                resources.Remove(resource);
-            }
-        }
-
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.cyan;
+            Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position, radiusCollecting);
         }
     }
