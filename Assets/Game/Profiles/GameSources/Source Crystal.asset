@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9593ee1a5bbe4f42b492750d5227f74e, type: 3}
+  m_Name: Source Crystal
+  m_EditorClassIdentifier: 
+  displayGuid: 328288ef-b22e-48c2-8b73-4f08f56fc043
+  amountMaxMining: 3
+  frequencyMining: 0.5
+  timeoutMining: 20
+  outputResourceAmount: 1
+  outputResourcePrefab: {fileID: 2090711246852744686, guid: 45ca7af8e52f4d24389bc9f0f4c80f06,
+    type: 3}
+  inputRequired: 0
+  inputResourceProfile: {fileID: 0}
+  resourcePerSecond: 0.115384616

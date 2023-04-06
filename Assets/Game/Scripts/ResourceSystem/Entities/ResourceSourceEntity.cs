@@ -33,6 +33,8 @@ namespace Game.Scripts.ResourceSystem.Entities
             if (_timeoutWaitingDelta > 0) return false;
 
             if (_timeoutRecoveryDelta > 0) return false;
+
+            if (!CanBeMinedCheckRequiredResources()) return false;
             
             amountMining--;
             
@@ -50,6 +52,11 @@ namespace Game.Scripts.ResourceSystem.Entities
             return true;
         }
 
+        protected virtual bool CanBeMinedCheckRequiredResources()
+        {
+            return true;
+        }
+        
         private void Recovering()
         {
             if (_recovering != null) StopCoroutine(_recovering);
@@ -88,8 +95,11 @@ namespace Game.Scripts.ResourceSystem.Entities
 
         public void AnimationDrop(ResourceSourceEntity source)
         {
-            var resource = Instantiate(source.profile.resourcePrefabOutput);
-            StartCoroutine(_AnimationDrop(resource));
+            for (int i = 0; i < source.profile.outputResourceAmount; i++)
+            {
+                var resource = Instantiate(source.profile.outputResourcePrefab);
+                StartCoroutine(_AnimationDrop(resource));
+            }
         }
         
         public float heightDrop = 2f;
@@ -100,13 +110,16 @@ namespace Game.Scripts.ResourceSystem.Entities
             var startPoint = transform.position + Vector3.up * heightDrop;
             var dropPoint = transform.position +
                             radiusDrop * Vector3.ProjectOnPlane(Random.onUnitSphere, Vector3.up).normalized;
+            var targetScale = resource.transform.localScale;
             
             resource.collectable = false;
             resource.transform.position = startPoint;
+            resource.transform.localScale = Vector3.zero;
             
-            var duration = 1f;
+            var duration = 0.5f;
             resource.transform.DOJump(dropPoint, 1, 3, duration);
             resource.transform.DOShakeScale(duration);
+            resource.transform.DOScale(targetScale, duration);
             
             yield return new WaitForSeconds(duration);
             

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Game.Scripts.ResourceSystem.Entities;
+﻿using Game.Scripts.ResourceSystem.Entities;
 using Game.Scripts.Tools;
 using UnityEngine;
 
 namespace Game.Scripts.ResourceSystem.Profiles
 {
-    [CreateAssetMenu(menuName = GameManager.CreateResourceSourceProfile + ProfileName, fileName = ProfileName, order = 0)]
+    [CreateAssetMenu(menuName = GameManager.ResourceSystem + ProfileName, fileName = ProfileName, order = 0)]
     public class ResourceSourceProfile : ScriptableObjectWithGuid
     {
-        private const string ProfileName = nameof(ResourceSourceProfile);
+        private const string ProfileName = "Source";
         
         [Header("Source Settings")]
         [Min(1)]
@@ -21,11 +19,13 @@ namespace Game.Scripts.ResourceSystem.Profiles
 
         [Header("Resource Settings")]
         [Min(0)]
-        public int amountOutput = 1;
-        public ResourceEntity resourcePrefabOutput = null;
-        [Space]
-        public List<RequiredResource> requiredResources = new List<RequiredResource>();
+        public int outputResourceAmount = 1;
+        public ResourceEntity outputResourcePrefab = null;
 
+        [Space]
+        public bool inputRequired = false;
+        public RequiredResourceProfile inputResourceProfile = null;
+        
         [Header("Source information - read only")]
         [SerializeField]
         [Tooltip("Show total speed of mining")]
@@ -37,24 +37,7 @@ namespace Game.Scripts.ResourceSystem.Profiles
             
             var durationMining = amountMaxMining / frequencyMining;
             var periodMining = durationMining + timeoutMining;
-            resourcePerSecond = amountMaxMining / periodMining;
-
-            foreach (var input in requiredResources)
-            {
-                if (input != null) input.displayName = $"[{input.amount}] {input.profile?.name}";
-            }
-        }
-
-        [Serializable]
-        public class RequiredResource
-        {
-            [HideInInspector]
-            [SerializeField]
-            internal string displayName = string.Empty;
-            
-            [Space]
-            [Min(0)] public int amount = 1;
-            public ResourceProfile profile = null;
+            resourcePerSecond = outputResourceAmount * amountMaxMining / periodMining;
         }
     }
 }

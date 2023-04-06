@@ -17,7 +17,7 @@ namespace Game.Scripts.ResourceSystem.Controllers
 
         public readonly Dictionary<ResourceProfile, Queue<ResourceEntity>> items = new Dictionary<ResourceProfile, Queue<ResourceEntity>>();
 
-        public bool Contains(params ResourceSourceProfile.RequiredResource[] required)
+        public bool Contains(params RequiredResourceProfile.RequiredResource[] required)
         {
             return required.All(r => r.amount <= CountResource(r.profile));
         }
@@ -47,6 +47,8 @@ namespace Game.Scripts.ResourceSystem.Controllers
             
             queue.Enqueue(resource);
             
+            Debug.Log($"{resource.name} was putted to {name}");
+            
             onPutted.Invoke(resource);
         }
 
@@ -56,6 +58,8 @@ namespace Game.Scripts.ResourceSystem.Controllers
             {
                 if (queue.TryDequeue(out resource))
                 {
+                    Debug.Log($"{resource.name} was picked from {name}");
+                    
                     onPicked.Invoke(resource);
                     
                     return true;
@@ -67,7 +71,7 @@ namespace Game.Scripts.ResourceSystem.Controllers
             return false;
         }
 
-        public bool TryPick(ResourceSourceProfile.RequiredResource[] required, List<ResourceEntity> resources)
+        public bool TryPick(RequiredResourceProfile.RequiredResource[] required, List<ResourceEntity> resources)
         {
             if (!Contains(required)) return false;
             
@@ -80,10 +84,6 @@ namespace Game.Scripts.ResourceSystem.Controllers
                     if (TryPick(r.profile, out var resource))
                     {
                         resources.Add(resource);
-                    }
-                    else
-                    {
-                        return false;
                     }
                 }
             }
@@ -104,6 +104,8 @@ namespace Game.Scripts.ResourceSystem.Controllers
 
             resource.transform.DOJump(transform.position, 1, 3, duration);
             resource.transform.DOShakeScale(duration);
+            resource.transform.DOScale(Vector3.zero, duration);
+            
             yield return new WaitForSeconds(duration);
             
             resource.gameObject.SetActive(false);

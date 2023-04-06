@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9593ee1a5bbe4f42b492750d5227f74e, type: 3}
+  m_Name: Spot Coin
+  m_EditorClassIdentifier: 
+  displayGuid: d52d8472-ca16-4dd7-a4c8-fa424a03e763
+  amountMaxMining: 1
+  frequencyMining: 1
+  timeoutMining: 1
+  outputResourceAmount: 1
+  outputResourcePrefab: {fileID: 7578461768307972373, guid: e3bc9dec502866e4aba42e98ea36b1df,
+    type: 3}
+  inputRequired: 1
+  inputResourceProfile: {fileID: 11400000, guid: db0281f6c4ab222408fa5dbaca907af4,
+    type: 2}
+  resourcePerSecond: 0.5

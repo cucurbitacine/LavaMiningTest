@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c68abf7b24747c386526c12a94b93f1, type: 3}
-  m_Name: ResourceAsset
+  m_Name: Wood
   m_EditorClassIdentifier: 
-  displayGuid: 40a9f81c-8938-4f3e-938a-412a285a8222
-  nameResource: 
-  icon: {fileID: 0}
+  displayGuid: fe2efad2-4815-4871-a5fc-ce49c0e4a02b
+  nameResource: Wood
+  icon: {fileID: 21300006, guid: 07ae5d063100d5d43a353e0d35402336, type: 3}
   description: Good Luck, Mr. Gorsky!
