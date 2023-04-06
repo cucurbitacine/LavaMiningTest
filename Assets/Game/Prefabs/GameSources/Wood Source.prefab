@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4101050761198396599}
   - component: {fileID: 4101050761198396592}
   - component: {fileID: 4101050761198396593}
+  - component: {fileID: 1380349721004844454}
   m_Layer: 0
   m_Name: Wood Source
   m_TagString: Untagged
@@ -115,19 +116,19 @@ MonoBehaviour:
   amountMining: 0
   onWasMined:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4101050761198396593}
-        m_TargetAssemblyTypeName: Game.Scripts.ResourceSystem.Entities.ResourceSourceEntity,
-          Game
-        m_MethodName: AnimationDrop
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &1380349721004844454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4101050761198396594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a40fecb97f254ce090d8b9075f80dc9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   heightDrop: 2
-  radiusDrop: 3
+  radiusDrop: 2
+  source: {fileID: 4101050761198396593}

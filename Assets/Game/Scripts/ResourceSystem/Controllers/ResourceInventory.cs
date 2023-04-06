@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using Game.Scripts.ResourceSystem.Entities;
 using Game.Scripts.ResourceSystem.Profiles;
 using UnityEngine;
@@ -91,26 +89,6 @@ namespace Game.Scripts.ResourceSystem.Controllers
             return true;
         }
 
-        public void AnimationPut(ResourceEntity resource)
-        {
-            StartCoroutine(_AnimationPut(resource));
-        }
-        
-        private IEnumerator _AnimationPut(ResourceEntity resource)
-        {
-            resource.collectable = false;
-            
-            var duration = 1f;
-
-            resource.transform.DOJump(transform.position, 1, 3, duration);
-            resource.transform.DOShakeScale(duration);
-            resource.transform.DOScale(Vector3.zero, duration);
-            
-            yield return new WaitForSeconds(duration);
-            
-            resource.gameObject.SetActive(false);
-        }
-        
 #if UNITY_EDITOR
         [SerializeField] private List<InventoryItem> _displayItems = new List<InventoryItem>();
 

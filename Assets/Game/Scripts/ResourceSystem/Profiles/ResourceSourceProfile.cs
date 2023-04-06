@@ -23,7 +23,6 @@ namespace Game.Scripts.ResourceSystem.Profiles
         public ResourceEntity outputResourcePrefab = null;
 
         [Space]
-        public bool inputRequired = false;
         public RequiredResourceProfile inputResourceProfile = null;
         
         [Header("Source information - read only")]

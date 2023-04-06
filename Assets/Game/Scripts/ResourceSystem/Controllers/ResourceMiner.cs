@@ -11,8 +11,6 @@ namespace Game.Scripts.ResourceSystem.Controllers
         public bool active = true;
 
         [Space]
-        [Range(0.01f, 300f)]
-        public float frequencyMining = 50f;
         [Min(0f)]
         public float radiusMining = 2f;
         public LayerMask sourceLayers = 1;
@@ -41,6 +39,8 @@ namespace Game.Scripts.ResourceSystem.Controllers
                     {
                         if (_cache.TryGetComponent(_overlap[i], out var source))
                         {
+                            yield return new WaitForSeconds(1f / source.profile.frequencyMining);
+                            
                             if (source.Mine())
                             {
                                 onSourceMined.Invoke(source);
@@ -50,7 +50,7 @@ namespace Game.Scripts.ResourceSystem.Controllers
                     }
                 }
 
-                yield return new WaitForSeconds(1f / frequencyMining);
+                yield return new WaitForFixedUpdate();
             }
         }
         

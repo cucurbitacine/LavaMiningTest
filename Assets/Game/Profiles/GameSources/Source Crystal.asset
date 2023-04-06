@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Source Crystal
   m_EditorClassIdentifier: 
   displayGuid: 328288ef-b22e-48c2-8b73-4f08f56fc043
-  amountMaxMining: 3
+  amountMaxMining: 2
   frequencyMining: 0.5
-  timeoutMining: 20
+  timeoutMining: 16
   outputResourceAmount: 1
   outputResourcePrefab: {fileID: 2090711246852744686, guid: 45ca7af8e52f4d24389bc9f0f4c80f06,
     type: 3}
   inputRequired: 0
   inputResourceProfile: {fileID: 0}
-  resourcePerSecond: 0.115384616
+  resourcePerSecond: 0.1

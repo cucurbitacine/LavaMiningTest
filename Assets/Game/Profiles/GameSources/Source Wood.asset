@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Source Wood
   m_EditorClassIdentifier: 
   displayGuid: d35cbdab-b14b-481b-b856-9c60b8f4d0e9
-  amountMaxMining: 3
+  amountMaxMining: 8
   frequencyMining: 2
-  timeoutMining: 10
-  outputResourceAmount: 3
+  timeoutMining: 4
+  outputResourceAmount: 1
   outputResourcePrefab: {fileID: 8056074342101225583, guid: 73c9e2c177c3e4244a7ca8c97292c9b8,
     type: 3}
   inputRequired: 0
   inputResourceProfile: {fileID: 0}
-  resourcePerSecond: 0.7826087
+  resourcePerSecond: 1

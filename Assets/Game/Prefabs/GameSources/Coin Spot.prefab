@@ -13,10 +13,12 @@ GameObject:
   - component: {fileID: 6021655800516463496}
   - component: {fileID: 6021655800516463495}
   - component: {fileID: 6021655800516463494}
+  - component: {fileID: 7475964180571799986}
+  - component: {fileID: 2178286226067697364}
   m_Layer: 0
   m_Name: Coin Spot
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -116,20 +118,39 @@ MonoBehaviour:
   amountMining: 0
   onWasMined:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6021655800516463494}
-        m_TargetAssemblyTypeName: Game.Scripts.ResourceSystem.Entities.ResourceSourceEntity,
-          Game
-        m_MethodName: AnimationDrop
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  inventory: {fileID: 7475964180571799986}
+--- !u!114 &7475964180571799986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6021655800516463493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eda91ce3feb34efc86bdf4e44266c9a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onPutted:
+    m_PersistentCalls:
+      m_Calls: []
+  onPicked:
+    m_PersistentCalls:
+      m_Calls: []
+  _displayItems: []
+--- !u!114 &2178286226067697364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6021655800516463493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a40fecb97f254ce090d8b9075f80dc9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   heightDrop: 2
   radiusDrop: 2
-  inventory: {fileID: 0}
+  source: {fileID: 6021655800516463494}
