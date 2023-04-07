@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Game.Scripts.ResourceSystem.Controllers;
 using Game.Scripts.ResourceSystem.Entities;
 using Game.Scripts.ResourceSystem.Profiles;
 using UnityEngine;
@@ -7,14 +9,16 @@ namespace Game.Scripts.UI
 {
     public class PlayerInventoryView : InventoryView
     {
+        [SerializeField] private ResourceInventory playerInventory = null;
+        
         [Space]
-        public PlayerResourceView resourceViewPrefab = null;
+        public ResourceView resourceViewPrefab = null;
 
         [Space]
         public Transform contentRoot = null;
         
-        private readonly Dictionary<ResourceProfile, PlayerResourceView> _views =
-            new Dictionary<ResourceProfile, PlayerResourceView>();
+        private readonly Dictionary<ResourceProfile, ResourceView> _views =
+            new Dictionary<ResourceProfile, ResourceView>();
 
         protected override void Put(ResourceEntity resource)
         {
@@ -30,7 +34,7 @@ namespace Game.Scripts.UI
             view.Decrease();
         }
 
-        private PlayerResourceView CreateView(ResourceProfile profile)
+        private ResourceView CreateView(ResourceProfile profile)
         {
             if (contentRoot == null) contentRoot = transform;
             
@@ -41,7 +45,7 @@ namespace Game.Scripts.UI
             return view;
         }
 
-        private PlayerResourceView GetView(ResourceProfile profile)
+        private ResourceView GetView(ResourceProfile profile)
         {
             if (!_views.TryGetValue(profile, out var view))
             {
@@ -50,6 +54,16 @@ namespace Game.Scripts.UI
             }
 
             return view;
+        }
+
+        private void OnEnable()
+        {
+            if (playerInventory != null) Subscribe(playerInventory);
+        }
+        
+        private void OnDisable()
+        {
+            Unsubscribe();
         }
     }
 }

@@ -4,21 +4,19 @@ using Game.Scripts.ResourceSystem.Controllers;
 using Game.Scripts.ResourceSystem.Entities;
 using UnityEngine;
 
-namespace Game.Scripts.ResourceSystem.Effects
+namespace Game.Scripts.Effects
 {
-    public class PlayerPutsResourceToInventoryEffect : MonoBehaviour
+    public class PlayerCollectsResourceEffect : MonoBehaviour
     {
         public ResourceInventory inventory = null;
 
-        public void AnimatePickUp(ResourceEntity resource)
+        public void AnimateReceive(ResourceEntity resource)
         {
             StartCoroutine(_Animation(resource));
         }
 
         private IEnumerator _Animation(ResourceEntity resource)
         {
-            resource.collectable = false;
-
             var startScale = resource.transform.localScale;
 
             var duration = 1f;
@@ -31,16 +29,17 @@ namespace Game.Scripts.ResourceSystem.Effects
 
             resource.transform.localScale = startScale;
             resource.gameObject.SetActive(false);
+            
         }
 
         private void OnEnable()
         {
-            inventory.onPutted.AddListener(AnimatePickUp);
+            inventory.onPutted.AddListener(AnimateReceive);
         }
 
         private void OnDisable()
         {
-            inventory.onPutted.RemoveListener(AnimatePickUp);
+            inventory.onPutted.RemoveListener(AnimateReceive);
         }
     }
 }

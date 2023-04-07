@@ -6,27 +6,31 @@ namespace Game.Scripts.UI
 {
     public abstract class InventoryView : MonoBehaviour
     {
-        public ResourceInventory inventory = null;
+        public ResourceInventory inventory { get; private set; }
 
         protected abstract void Put(ResourceEntity resource);
         protected abstract void Pick(ResourceEntity resource);
 
-        protected virtual void OnEnable()
+        public void Subscribe(ResourceInventory resourceInventory)
         {
+            inventory = resourceInventory;
+
             if (inventory != null)
             {
                 inventory.onPutted.AddListener(Put);
                 inventory.onPicked.AddListener(Pick);
             }
         }
-
-        protected virtual void OnDisable()
+        
+        public void Unsubscribe()
         {
             if (inventory != null)
             {
                 inventory.onPutted.RemoveListener(Put);
                 inventory.onPicked.RemoveListener(Pick);
             }
+
+            inventory = null;
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Game.Scripts.UI
 {
-    public class PlayerResourceView : MonoBehaviour
+    public class ResourceView : MonoBehaviour
     {
         [Min(0)]
         public int amount = 0;
@@ -25,29 +25,31 @@ namespace Game.Scripts.UI
             
             if (iconImage != null && profile.icon != null) iconImage.sprite = initProfile.icon;
 
-            amount = initAmount;
-            
-            onAmountChanged.Invoke(amount);
+            SetAmount(initAmount);
         }
-        
-        public int Increase()
-        {
-            amount++;
 
-            onAmountChanged.Invoke(amount);
-            
+        public int SetAmount(int value)
+        {
+            value = Mathf.Max(value, 0);
+
+            if (value != amount)
+            {
+                amount = value;
+                
+                onAmountChanged.Invoke(amount);
+            }
+
             return amount;
         }
         
-        public int Decrease()
+        public int Increase(int value = 1)
         {
-            if (amount == 0) return 0;
-
-            amount--;
-            
-            onAmountChanged.Invoke(amount);
-            
-            return amount;
+            return SetAmount(amount + value);
+        }
+        
+        public int Decrease(int value = 1)
+        {
+            return SetAmount(amount - value);
         }
 
         public void UpdateView(int value)

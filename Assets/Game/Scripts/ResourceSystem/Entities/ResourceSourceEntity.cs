@@ -17,7 +17,7 @@ namespace Game.Scripts.ResourceSystem.Entities
         public int amountMining = 0;
 
         [Space]
-        public UnityEvent<ResourceSourceEntity> onWasMined = new UnityEvent<ResourceSourceEntity>();
+        public UnityEvent<ResourceSourceEntity> onResourceDropped = new UnityEvent<ResourceSourceEntity>();
 
         private float _timeoutRecoveryDelta = 0f;
         
@@ -38,7 +38,7 @@ namespace Game.Scripts.ResourceSystem.Entities
                 Recovering();
             }
 
-            onWasMined.Invoke(this);
+            onResourceDropped.Invoke(this);
             
             return true;
         }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6021655800516463494}
   - component: {fileID: 7475964180571799986}
   - component: {fileID: 2178286226067697364}
+  - component: {fileID: 6902207048726927027}
   m_Layer: 0
   m_Name: Coin Spot
   m_TagString: Untagged
@@ -116,7 +117,7 @@ MonoBehaviour:
   profile: {fileID: 11400000, guid: 7d5b9121e8997054a90da63bf7736fc2, type: 2}
   active: 1
   amountMining: 0
-  onWasMined:
+  onResourceDropped:
     m_PersistentCalls:
       m_Calls: []
   inventory: {fileID: 7475964180571799986}
@@ -154,3 +155,18 @@ MonoBehaviour:
   heightDrop: 2
   radiusDrop: 2
   source: {fileID: 6021655800516463494}
+--- !u!114 &6902207048726927027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6021655800516463493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51438cf337c248509c5cc1409cc714a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spot: {fileID: 6021655800516463494}
+  viewPrefab: {fileID: 7240691933579709090, guid: 5fde82c6b07489441b7d82ea1f71826c,
+    type: 3}

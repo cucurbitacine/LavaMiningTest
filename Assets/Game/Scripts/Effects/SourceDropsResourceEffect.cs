@@ -4,7 +4,7 @@ using Game.Scripts.ResourceSystem.Entities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Game.Scripts.ResourceSystem.Effects
+namespace Game.Scripts.Effects
 {
     public class SourceDropsResourceEffect : MonoBehaviour
     {
@@ -14,9 +14,9 @@ namespace Game.Scripts.ResourceSystem.Effects
         [Space]
         public ResourceSourceEntity source = null;
         
-        public void AnimateDrop(ResourceSourceEntity source)
+        public void AnimateSend(ResourceSourceEntity source)
         {
-            for (int i = 0; i < source.profile.outputResourceAmount; i++)
+            for (var i = 0; i < source.profile.outputResourceAmount; i++)
             {
                 var resource = Instantiate(source.profile.outputResourcePrefab);
                 StartCoroutine(_Animation(resource));
@@ -46,12 +46,12 @@ namespace Game.Scripts.ResourceSystem.Effects
 
         private void OnEnable()
         {
-            source.onWasMined.AddListener(AnimateDrop);
+            source.onResourceDropped.AddListener(AnimateSend);
         }
         
         private void OnDisable()
         {
-            source.onWasMined.RemoveListener(AnimateDrop);
+            source.onResourceDropped.RemoveListener(AnimateSend);
         }
     }
 }
