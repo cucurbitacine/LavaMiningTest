@@ -1,10 +1,9 @@
-using System;
 using Game.Scripts.Player;
 using UnityEngine;
 
 namespace Game.Scripts.UI
 {
-    public class JoystickController : MonoBehaviour
+    public class JoystickInputView : MonoBehaviour
     {
         public bool active = false;
         

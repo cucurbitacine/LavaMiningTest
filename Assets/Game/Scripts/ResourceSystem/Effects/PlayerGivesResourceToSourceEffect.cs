@@ -22,6 +22,8 @@ namespace Game.Scripts.ResourceSystem.Effects
 
         private IEnumerator _AnimationDistribute(ResourceEntity resource, ResourceSpotEntity spot)
         {
+            spot.inventory.Put(resource);
+            
             var trg = resource.transform;
 
             trg.position = transform.position + Vector3.up * 2f;
@@ -31,9 +33,7 @@ namespace Game.Scripts.ResourceSystem.Effects
             trg.DOShakeScale(durationEffect);
 
             yield return new WaitForSeconds(durationEffect);
-            
-            spot.inventory.Put(resource);
-            
+
             trg.gameObject.SetActive(false);
         }
 

@@ -47,13 +47,19 @@ namespace Game.Scripts.ResourceSystem.Controllers
 
                             spot.FillRequired(ref _hashRequired);
 
-                            inventory.Pick(_hashRequired, ref _hashResources);
-                            
-                            foreach (var resource in _hashResources)
+                            //inventory.Pick(_hashRequired, ref _hashResources);
+
+                            foreach (var required in _hashRequired)
                             {
-                                yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
-                                
-                                onDistributed.Invoke(resource, spot);
+                                for (var j = 0; j < required.amount; j++)
+                                {
+                                    if (inventory.TryPick(required.profile, out var resource))
+                                    {
+                                        onDistributed.Invoke(resource, spot);
+                                        
+                                        yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
+                                    }
+                                }
                             }
                         }
                     }
