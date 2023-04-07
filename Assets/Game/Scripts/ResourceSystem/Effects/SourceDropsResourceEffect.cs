@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace Game.Scripts.ResourceSystem.Effects
 {
-    public class DropEffect : MonoBehaviour
+    public class SourceDropsResourceEffect : MonoBehaviour
     {
         public float heightDrop = 2f;
         public float radiusDrop = 2f;
@@ -14,16 +14,16 @@ namespace Game.Scripts.ResourceSystem.Effects
         [Space]
         public ResourceSourceEntity source = null;
         
-        public void AnimationDrop(ResourceSourceEntity source)
+        public void AnimateDrop(ResourceSourceEntity source)
         {
             for (int i = 0; i < source.profile.outputResourceAmount; i++)
             {
                 var resource = Instantiate(source.profile.outputResourcePrefab);
-                StartCoroutine(_AnimationDrop(resource));
+                StartCoroutine(_Animation(resource));
             }
         }
 
-        private IEnumerator _AnimationDrop(ResourceEntity resource)
+        private IEnumerator _Animation(ResourceEntity resource)
         {
             var startPoint = transform.position + Vector3.up * heightDrop;
             var dropPoint = transform.position +
@@ -46,12 +46,12 @@ namespace Game.Scripts.ResourceSystem.Effects
 
         private void OnEnable()
         {
-            source.onWasMined.AddListener(AnimationDrop);
+            source.onWasMined.AddListener(AnimateDrop);
         }
         
         private void OnDisable()
         {
-            source.onWasMined.RemoveListener(AnimationDrop);
+            source.onWasMined.RemoveListener(AnimateDrop);
         }
     }
 }

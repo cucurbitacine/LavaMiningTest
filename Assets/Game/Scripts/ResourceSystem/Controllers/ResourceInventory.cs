@@ -15,19 +15,14 @@ namespace Game.Scripts.ResourceSystem.Controllers
 
         public readonly Dictionary<ResourceProfile, Queue<ResourceEntity>> items = new Dictionary<ResourceProfile, Queue<ResourceEntity>>();
 
-        public bool Contains(params RequiredResourceProfile.RequiredResource[] required)
+        public bool Contains(List<RequiredResource> listRequired)
         {
-            return required.All(r => r.amount <= CountResource(r.profile));
+            return listRequired.All(required => required.amount <= CountResource(required.profile));
         }
         
         public int CountResource(ResourceProfile profile)
         {
-            if (items.TryGetValue(profile, out var queue))
-            {
-                return queue.Count;
-            }
-
-            return 0;
+            return items.TryGetValue(profile, out var queue) ? queue.Count : 0;
         }
         
         public void Put(ResourceEntity resource)
@@ -45,48 +40,40 @@ namespace Game.Scripts.ResourceSystem.Controllers
             
             queue.Enqueue(resource);
             
-            Debug.Log($"{resource.name} was putted to {name}");
-            
             onPutted.Invoke(resource);
         }
 
-        public bool TryPick(ResourceProfile profile, out ResourceEntity resource)
+        public bool TryPick(ResourceProfile inputProfile, out ResourceEntity outputResource)
         {
-            if (items.TryGetValue(profile, out var queue))
+            if (items.TryGetValue(inputProfile, out var queue))
             {
-                if (queue.TryDequeue(out resource))
+                if (queue.TryDequeue(out outputResource))
                 {
-                    Debug.Log($"{resource.name} was picked from {name}");
-                    
-                    onPicked.Invoke(resource);
-                    
+                    onPicked.Invoke(outputResource);
                     return true;
                 }
             }
 
-            resource = null;
-            
+            outputResource = null;
             return false;
         }
 
-        public bool TryPick(RequiredResourceProfile.RequiredResource[] required, List<ResourceEntity> resources)
+        public int Pick(List<RequiredResource> inputRequired, ref List<ResourceEntity> outputResources)
         {
-            if (!Contains(required)) return false;
-            
-            resources.Clear();
+            outputResources.Clear();
 
-            foreach (var r in required)
+            foreach (var input in inputRequired)
             {
-                for (var i = 0; i < r.amount; i++)
+                for (var i = 0; i < input.amount; i++)
                 {
-                    if (TryPick(r.profile, out var resource))
+                    if (TryPick(input.profile, out var output))
                     {
-                        resources.Add(resource);
+                        outputResources.Add(output);
                     }
                 }
             }
 
-            return true;
+            return outputResources.Count;
         }
 
 #if UNITY_EDITOR

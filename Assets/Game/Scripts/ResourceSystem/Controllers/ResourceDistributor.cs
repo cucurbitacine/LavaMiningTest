@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Game.Scripts.ResourceSystem.Entities;
+using Game.Scripts.ResourceSystem.Profiles;
 using Game.Scripts.Tools;
 using UnityEngine;
 using UnityEngine.Events;
@@ -25,7 +26,8 @@ namespace Game.Scripts.ResourceSystem.Controllers
         
         private const ushort CountMaxOverlaps = 32;
 
-        private readonly List<ResourceEntity> _hash = new List<ResourceEntity>();
+        private List<RequiredResource> _hashRequired = new List<RequiredResource>();
+        private List<ResourceEntity> _hashResources = new List<ResourceEntity>();
 
         private IEnumerator _Distributing()
         {
@@ -43,13 +45,15 @@ namespace Game.Scripts.ResourceSystem.Controllers
                             if (spot.inventory == null) continue;
                             if (spot.profile.inputResourceProfile == null) continue;
 
-                            if (inventory.TryPick(spot.profile.inputResourceProfile.requiredResources, _hash))
+                            spot.FillRequired(ref _hashRequired);
+
+                            inventory.Pick(_hashRequired, ref _hashResources);
+                            
+                            foreach (var resource in _hashResources)
                             {
-                                foreach (var entity in _hash)
-                                {
-                                    yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
-                                    onDistributed.Invoke(entity, spot);
-                                }
+                                yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
+                                
+                                onDistributed.Invoke(resource, spot);
                             }
                         }
                     }

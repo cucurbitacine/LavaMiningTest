@@ -6,16 +6,16 @@ using UnityEngine;
 
 namespace Game.Scripts.ResourceSystem.Effects
 {
-    public class CollectEffect : MonoBehaviour
+    public class PlayerPutsResourceToInventoryEffect : MonoBehaviour
     {
         public ResourceInventory inventory = null;
 
-        public void AnimationPut(ResourceEntity resource)
+        public void AnimatePickUp(ResourceEntity resource)
         {
-            StartCoroutine(_AnimationPut(resource));
+            StartCoroutine(_Animation(resource));
         }
 
-        private IEnumerator _AnimationPut(ResourceEntity resource)
+        private IEnumerator _Animation(ResourceEntity resource)
         {
             resource.collectable = false;
 
@@ -35,12 +35,12 @@ namespace Game.Scripts.ResourceSystem.Effects
 
         private void OnEnable()
         {
-            inventory.onPutted.AddListener(AnimationPut);
+            inventory.onPutted.AddListener(AnimatePickUp);
         }
 
         private void OnDisable()
         {
-            inventory.onPutted.RemoveListener(AnimationPut);
+            inventory.onPutted.RemoveListener(AnimatePickUp);
         }
     }
 }

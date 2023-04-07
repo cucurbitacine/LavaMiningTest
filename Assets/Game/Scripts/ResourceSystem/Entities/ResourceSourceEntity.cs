@@ -29,7 +29,7 @@ namespace Game.Scripts.ResourceSystem.Entities
 
             if (_timeoutRecoveryDelta > 0) return false;
 
-            if (!CanBeMinedCheckRequiredResources()) return false;
+            if (!CanBeMinedInternalCheck()) return false;
             
             amountMining--;
             
@@ -43,7 +43,7 @@ namespace Game.Scripts.ResourceSystem.Entities
             return true;
         }
 
-        protected virtual bool CanBeMinedCheckRequiredResources()
+        protected virtual bool CanBeMinedInternalCheck()
         {
             return true;
         }
