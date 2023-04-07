@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Game.Scripts.Player;
 using Game.Scripts.ResourceSystem.Entities;
 using Game.Scripts.ResourceSystem.Profiles;
 using Game.Scripts.Tools;
@@ -33,7 +34,7 @@ namespace Game.Scripts.ResourceSystem.Controllers
         {
             while (true)
             {
-                if (active)
+                if (active && !miner.player.moving)
                 {
                     var center = transform.position;
                     var count = Physics.OverlapSphereNonAlloc(center, miner.radiusMining, _overlap, miner.sourceLayers, miner.interaction);

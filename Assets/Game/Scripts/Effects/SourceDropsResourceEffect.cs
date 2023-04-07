@@ -10,6 +10,7 @@ namespace Game.Scripts.Effects
     {
         public float heightDrop = 2f;
         public float radiusDrop = 2f;
+        public float duration = 0.5f;
 
         [Space]
         public ResourceSourceEntity source = null;
@@ -25,6 +26,9 @@ namespace Game.Scripts.Effects
 
         private IEnumerator _Animation(ResourceEntity resource)
         {
+            source.transform.DOComplete();
+            source.transform.DOShakeScale(duration, new Vector3(1f, 0.2f, 1f));
+                
             var startPoint = transform.position + Vector3.up * heightDrop;
             var dropPoint = transform.position +
                             radiusDrop * Vector3.ProjectOnPlane(Random.onUnitSphere, Vector3.up).normalized;
@@ -32,9 +36,9 @@ namespace Game.Scripts.Effects
             
             resource.collectable = false;
             resource.transform.position = startPoint;
-            resource.transform.localScale = Vector3.zero;
+            resource.transform.localScale = Vector3.one * 0.1f;
             
-            var duration = 0.5f;
+            
             resource.transform.DOJump(dropPoint, 1, 3, duration);
             resource.transform.DOShakeScale(duration);
             resource.transform.DOScale(targetScale, duration);

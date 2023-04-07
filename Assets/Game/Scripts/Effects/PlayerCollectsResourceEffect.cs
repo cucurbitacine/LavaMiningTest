@@ -23,7 +23,7 @@ namespace Game.Scripts.Effects
 
             resource.transform.DOJump(transform.position, 1, 3, duration);
             resource.transform.DOShakeScale(duration);
-            resource.transform.DOScale(Vector3.zero, duration);
+            resource.transform.DOScale(Vector3.one * 0.1f, duration);
 
             yield return new WaitForSeconds(duration);
 

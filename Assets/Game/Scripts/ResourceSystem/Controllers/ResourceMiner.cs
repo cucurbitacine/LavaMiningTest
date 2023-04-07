@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Game.Scripts.Player;
 using Game.Scripts.ResourceSystem.Entities;
 using Game.Scripts.Tools;
 using UnityEngine;
@@ -19,6 +20,9 @@ namespace Game.Scripts.ResourceSystem.Controllers
         [Space]
         public UnityEvent<ResourceSourceEntity> onSourceMined = new UnityEvent<ResourceSourceEntity>();
 
+        [Space]
+        public PlayerController player = null;
+        
         private Coroutine _mining = null;
         
         private readonly ComponentCache<Collider, ResourceSourceEntity> _cache = new ComponentCache<Collider, ResourceSourceEntity>();
@@ -30,7 +34,7 @@ namespace Game.Scripts.ResourceSystem.Controllers
         {
             while (true)
             {
-                if (active)
+                if (active && !player.moving)
                 {
                     var center = transform.position;
                     var count = Physics.OverlapSphereNonAlloc(center, radiusMining, _overlap, sourceLayers, interaction);

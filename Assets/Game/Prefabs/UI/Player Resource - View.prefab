@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 7385728434288691277}
   - component: {fileID: 7385728434288691276}
   - component: {fileID: 7385728434288691275}
+  - component: {fileID: 5446595875872558363}
+  - component: {fileID: 4079740802827021226}
   m_Layer: 5
   m_Name: Player Resource - View
   m_TagString: Untagged
@@ -146,6 +148,31 @@ MonoBehaviour:
       m_Calls: []
   iconImage: {fileID: 7385728434657604336}
   amountText: {fileID: 7385728435389753409}
+--- !u!114 &5446595875872558363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7385728434288691273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b195d7a7b444cc2ba762753815d3d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  view: {fileID: 7385728434288691275}
+--- !u!225 &4079740802827021226
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7385728434288691273}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7385728434657604333
 GameObject:
   m_ObjectHideFlags: 0

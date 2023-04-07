@@ -998,7 +998,7 @@ PrefabInstance:
     - target: {fileID: 5173809907728662150, guid: acb21afdfeee8c843aea9d563ca505a8,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: acb21afdfeee8c843aea9d563ca505a8, type: 3}
@@ -1017,7 +1017,7 @@ PrefabInstance:
     - target: {fileID: 2215349343504231566, guid: 3265af673dbe5a442bd63dd8793f73ca,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4944148772558434758, guid: 3265af673dbe5a442bd63dd8793f73ca,
         type: 3}
@@ -1323,7 +1323,7 @@ PrefabInstance:
     - target: {fileID: 4101050761198396594, guid: acb2b7dc9fb57fb47a1f9b4de0a17e26,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4101050761198396597, guid: acb2b7dc9fb57fb47a1f9b4de0a17e26,
         type: 3}
@@ -1682,6 +1682,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef749fd9aad67234fa14c526c5b19056, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _moving: 0
+  onMoveChanged:
+    m_PersistentCalls:
+      m_Calls: []
   agent: {fileID: 1362245441}
 --- !u!224 &1411987897 stripped
 RectTransform:
@@ -1779,6 +1783,7 @@ MonoBehaviour:
   onSourceMined:
     m_PersistentCalls:
       m_Calls: []
+  player: {fileID: 1362245442}
 --- !u!1 &2039324702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1865,7 +1870,7 @@ PrefabInstance:
     - target: {fileID: 6021655800516463493, guid: bef4a618a1c582e44b0bc3bdf06c20a5,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6021655800516463498, guid: bef4a618a1c582e44b0bc3bdf06c20a5,
         type: 3}

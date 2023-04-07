@@ -1,4 +1,5 @@
-﻿using Game.Scripts.ResourceSystem.Profiles;
+﻿using System;
+using Game.Scripts.ResourceSystem.Profiles;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,6 +20,9 @@ namespace Game.Scripts.UI
         public Image iconImage = null;
         public TextMeshProUGUI amountText = null;
 
+        public LayoutElement layoutElement { get; private set; }
+        public CanvasGroup canvasGroup { get; private set; }
+        
         public void Initiate(ResourceProfile initProfile, int initAmount = 0)
         {
             profile = initProfile;
@@ -56,7 +60,13 @@ namespace Game.Scripts.UI
         {
             if (amountText != null) amountText.text = value.ToString("D");
         }
-        
+
+        private void Awake()
+        {
+            layoutElement = GetComponent<LayoutElement>();
+            canvasGroup = GetComponent<CanvasGroup>();
+        }
+
         private void OnEnable()
         {
             onAmountChanged.AddListener(UpdateView);

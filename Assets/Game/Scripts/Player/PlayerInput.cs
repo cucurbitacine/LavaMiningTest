@@ -79,6 +79,8 @@ namespace Game.Scripts.Player
         private void UpdatePlayer()
         {
             var direction = GetWorldDirection(move);
+
+            player.moving = direction != Vector3.zero;
             
             player.Move(direction.normalized * (speedMax * Time.deltaTime));
             

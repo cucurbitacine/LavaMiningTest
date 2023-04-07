@@ -5,6 +5,8 @@ namespace Game.Scripts.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        public bool moving;
+        
         [Space]
         public NavMeshAgent agent = null;
 
