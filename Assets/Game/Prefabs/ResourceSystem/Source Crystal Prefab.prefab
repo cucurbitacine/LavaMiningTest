@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4944148772558434758}
   - component: {fileID: 1942730118018418304}
   - component: {fileID: 454291001805509247}
-  - component: {fileID: 1663522518318070077}
   - component: {fileID: 4363266012918020645}
   - component: {fileID: 3183678529670621683}
+  - component: {fileID: 2944635226805217014}
   m_Layer: 0
   m_Name: Source Crystal Prefab
   m_TagString: Untagged
@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 2215349343504231566}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2215349343504231566}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 796a54e0e80758941867f0b2fde99e56, type: 3}
 --- !u!23 &454291001805509247
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -86,19 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1663522518318070077
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2215349343504231566}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4363266012918020645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,6 +104,8 @@ MonoBehaviour:
   profile: {fileID: 11400000, guid: e47c151d59c0f604e99375f685ff338d, type: 2}
   active: 1
   timeoutDropping: 0.1
+  waiting: 0
+  recovering: 0
   amountResources: 0
 --- !u!114 &3183678529670621683
 MonoBehaviour:
@@ -130,7 +119,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40fecb97f254ce090d8b9075f80dc9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heightDrop: 2
-  radiusDrop: 2
-  duration: 0.5
+  shakeDuration: 0.5
+  shakeScalePower: {x: 1, y: 0.2, z: 1}
+  localPointDropZone: {x: 0, y: -0.1, z: 0}
+  innerRadiusDropZone: 1.5
+  outerRadiusDropZone: 3
+  effectDefault: {fileID: 0}
   dropper: {fileID: 4363266012918020645}
+--- !u!64 &2944635226805217014
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2215349343504231566}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 796a54e0e80758941867f0b2fde99e56, type: 3}

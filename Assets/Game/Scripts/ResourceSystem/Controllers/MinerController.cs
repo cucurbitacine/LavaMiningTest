@@ -50,6 +50,8 @@ namespace Game.Scripts.ResourceSystem.Controllers
                             
                             mining = true;
                             
+                            player.View(source.transform.position - player.transform.position);
+                            
                             if (source.waiting) continue;
 
                             if (source.Mine())

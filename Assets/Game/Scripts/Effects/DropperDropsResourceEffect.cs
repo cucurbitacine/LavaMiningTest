@@ -35,8 +35,8 @@ namespace Game.Scripts.Effects
             var dir = Random.insideUnitCircle;
             var radius = Random.value * (outerRadiusDropZone - innerRadiusDropZone) + innerRadiusDropZone;
             var scatter = new Vector3(dir.x, 0f, dir.y) * radius;
-            
-            return dropper.transform.TransformPoint(localPointDropZone) + scatter; 
+
+            return dropper.transform.position + localPointDropZone + scatter;
         }
         
         private IEnumerator _Animation(ResourceBehaviour resource)

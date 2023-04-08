@@ -10,5 +10,7 @@ namespace Game.Scripts.ResourceSystem.Profiles
         [Min(0)]
         public int dropAmountResources = 1;
         public ResourceBehaviour dropResourcePrefab = null;
+        [Min(0f)]
+        public float timeoutDropping = 0.2f;
     }
 }

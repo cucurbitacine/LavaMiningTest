@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a929ff69bf274819bafbd09818ab7540, type: 3}
-  m_Name: Spot Coin Profile
+  m_Name: Spot Meat
   m_EditorClassIdentifier: 
-  displayGuid: f7176a43-2286-49c3-8665-7a34e303b63b
-  dropAmountResources: 3
-  dropResourcePrefab: {fileID: 7578461768307972373, guid: e3bc9dec502866e4aba42e98ea36b1df,
+  displayGuid: 70da21b3-3292-4196-8ee3-1233066301bf
+  dropAmountResources: 1
+  dropResourcePrefab: {fileID: 3538013185028970698, guid: 16fa635cc9670dd4b82aed23a13478f9,
     type: 3}
+  timeoutDropping: 0.25
   durationProduction: 10
   timeoutProduction: 1
-  inputRequiredProfile: {fileID: 11400000, guid: db0281f6c4ab222408fa5dbaca907af4,
+  inputRequiredProfile: {fileID: 11400000, guid: 5533afc317d207741a0e078d605e08ae,
     type: 2}

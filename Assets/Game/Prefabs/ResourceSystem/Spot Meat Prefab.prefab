@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6021655800516463493
+--- !u!1 &5810569419205251558
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,51 +8,51 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6021655800516463498}
-  - component: {fileID: 6021655800516463497}
-  - component: {fileID: 6021655800516463496}
-  - component: {fileID: 6021655800516463495}
-  - component: {fileID: 6021655800516463494}
-  - component: {fileID: 7475964180571799986}
-  - component: {fileID: 2178286226067697364}
-  - component: {fileID: 6902207048726927027}
+  - component: {fileID: 5810569419205251561}
+  - component: {fileID: 5810569419205251562}
+  - component: {fileID: 5810569419205251563}
+  - component: {fileID: 5810569419205251556}
+  - component: {fileID: 5810569419205251557}
+  - component: {fileID: 7245596643398556625}
+  - component: {fileID: 2092099985274991799}
+  - component: {fileID: 6700198115961375952}
   m_Layer: 0
-  m_Name: Spot Coin Prefab
+  m_Name: Spot Meat Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6021655800516463498
+--- !u!4 &5810569419205251561
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021655800516463493}
+  m_GameObject: {fileID: 5810569419205251558}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 5, y: 1, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6021655800516463497
+--- !u!33 &5810569419205251562
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021655800516463493}
+  m_GameObject: {fileID: 5810569419205251558}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6021655800516463496
+--- !u!23 &5810569419205251563
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021655800516463493}
+  m_GameObject: {fileID: 5810569419205251558}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -88,13 +88,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6021655800516463495
+--- !u!136 &5810569419205251556
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021655800516463493}
+  m_GameObject: {fileID: 5810569419205251558}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -102,13 +102,13 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &6021655800516463494
+--- !u!114 &5810569419205251557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021655800516463493}
+  m_GameObject: {fileID: 5810569419205251558}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b3cafa1dbc8442baa10f183a9100974, type: 3}
@@ -117,22 +117,21 @@ MonoBehaviour:
   onResourceDropped:
     m_PersistentCalls:
       m_Calls: []
-  profile: {fileID: 11400000, guid: fc42a503b14624d4c86d6852407d7d5f, type: 2}
+  profile: {fileID: 11400000, guid: 695994358ed45c945bf9c61900dc3905, type: 2}
   producting: 0
   productionProgress: 0
   active: 1
-  timeoutDropping: 0.1
   onProductionChanged:
     m_PersistentCalls:
       m_Calls: []
-  inventory: {fileID: 7475964180571799986}
---- !u!114 &7475964180571799986
+  inventory: {fileID: 7245596643398556625}
+--- !u!114 &7245596643398556625
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021655800516463493}
+  m_GameObject: {fileID: 5810569419205251558}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eda91ce3feb34efc86bdf4e44266c9a8, type: 3}
@@ -145,13 +144,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _displayItems: []
---- !u!114 &2178286226067697364
+--- !u!114 &2092099985274991799
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021655800516463493}
+  m_GameObject: {fileID: 5810569419205251558}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a40fecb97f254ce090d8b9075f80dc9c, type: 3}
@@ -159,23 +158,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shakeDuration: 0.5
   shakeScalePower: {x: 1, y: 0.2, z: 1}
-  localPointDropZone: {x: 3, y: 0, z: 0}
+  localPointDropZone: {x: -3, y: 0, z: 0}
   innerRadiusDropZone: 0
   outerRadiusDropZone: 2
   effectDefault: {fileID: 0}
-  dropper: {fileID: 6021655800516463494}
---- !u!114 &6902207048726927027
+  dropper: {fileID: 5810569419205251557}
+--- !u!114 &6700198115961375952
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021655800516463493}
+  m_GameObject: {fileID: 5810569419205251558}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51438cf337c248509c5cc1409cc714a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spot: {fileID: 6021655800516463494}
+  spot: {fileID: 5810569419205251557}
   spotViewPrefab: {fileID: 3097354416629443104, guid: 5fde82c6b07489441b7d82ea1f71826c,
     type: 3}

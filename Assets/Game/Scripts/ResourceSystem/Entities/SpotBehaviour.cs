@@ -16,8 +16,6 @@ namespace Game.Scripts.ResourceSystem.Entities
         
         [Space]
         public bool active = true;
-        [Min(0f)]
-        public float timeoutDropping = 0.1f;
         
         [Space]
         public UnityEvent<bool> onProductionChanged = new UnityEvent<bool>();
@@ -98,7 +96,7 @@ namespace Game.Scripts.ResourceSystem.Entities
                     {
                         Drop();
                         
-                        yield return new WaitForSeconds(timeoutDropping);
+                        yield return new WaitForSeconds(profile.timeoutDropping);
                     }
                     
                     yield return new WaitForSeconds(profile.timeoutProduction);

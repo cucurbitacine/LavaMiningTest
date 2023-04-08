@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9593ee1a5bbe4f42b492750d5227f74e, type: 3}
-  m_Name: Source Metal
+  m_Name: Source Crystal
   m_EditorClassIdentifier: 
-  displayGuid: 18aeaf9a-791d-432b-888c-f32f0d6d2540
-  dropAmountResources: 2
-  dropResourcePrefab: {fileID: 1018486320205159719, guid: 3042b412a72e212489189855fa762572,
+  displayGuid: dc9edd59-8028-470c-8616-fac3d9d76f17
+  dropAmountResources: 1
+  dropResourcePrefab: {fileID: 2090711246852744686, guid: 45ca7af8e52f4d24389bc9f0f4c80f06,
     type: 3}
-  maxAmountResources: 4
-  frequencyMining: 1
-  timeoutMining: 8
-  resourcePerSecond: 0.4
+  timeoutDropping: 0.5
+  maxAmountResources: 2
+  frequencyMining: 0.5
+  timeoutMining: 16
+  resourcePerSecond: 0.1

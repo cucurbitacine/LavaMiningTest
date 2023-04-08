@@ -10,8 +10,6 @@ namespace Game.Scripts.ResourceSystem.Entities
 
         [Space]
         public bool active = true;
-        [Min(0f)]
-        public float timeoutDropping = 0.1f;
 
         [Space] [Min(0)]
         public bool waiting = false;
@@ -81,7 +79,7 @@ namespace Game.Scripts.ResourceSystem.Entities
             {
                 Drop();
 
-                yield return new WaitForSeconds(timeoutDropping);
+                yield return new WaitForSeconds(profile.timeoutDropping);
             }
         }
         

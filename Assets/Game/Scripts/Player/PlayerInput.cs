@@ -83,8 +83,8 @@ namespace Game.Scripts.Player
             player.moving = direction != Vector3.zero;
             
             player.Move(direction.normalized * (speedMax * Time.deltaTime));
-            
-            player.View(direction);
+
+            if (player.moving) player.View(direction);
         }
 
         private void OnEnable()
