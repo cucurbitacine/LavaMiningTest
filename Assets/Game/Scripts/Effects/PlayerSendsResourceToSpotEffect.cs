@@ -1,17 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using DG.Tweening;
 using Game.Scripts.ResourceSystem.Controllers;
 using Game.Scripts.ResourceSystem.Entities;
+using Game.Scripts.ResourceSystem.Profiles;
 using UnityEngine;
 
 namespace Game.Scripts.Effects
 {
     public class PlayerSendsResourceToSpotEffect : MonoBehaviour
     {
-        public float durationEffect = 1;
-        
         [Space]
         public DistributorController distributor = null;
+        
+        [Space]
+        public ResourceEffectProfile effectDefault = null;
         
         public void AnimationSend(ResourceBehaviour resource, SpotBehaviour spot)
         {
@@ -22,17 +25,40 @@ namespace Game.Scripts.Effects
 
         private IEnumerator _Animation(ResourceBehaviour resource, SpotBehaviour spot)
         {
-            var trg = resource.transform;
-
-            trg.position = transform.position + Vector3.up * 2f;
-            trg.gameObject.SetActive(true);
+            var effect = resource.profile.effect;
+            if (effect == null) effect = effectDefault;
             
-            trg.DOJump(spot.transform.position, 1, 2, durationEffect);
-            trg.DOShakeScale(durationEffect);
+            resource.gameObject.SetActive(true);
+            
+            // Resource dropping
 
-            yield return new WaitForSeconds(durationEffect);
+            var initPosition = distributor.transform.position;
+            
+            var rTrans = resource.transform;
 
-            trg.gameObject.SetActive(false);
+            var startDrop = effect.GetDropStart(initPosition);
+            var targetDrop = effect.GetDropTarget(initPosition);
+
+            rTrans.position = startDrop;
+            rTrans.DOMove(targetDrop, effect.dropDuration);
+            rTrans.DOShakeScale(effect.dropDuration, effect.dropShakeScalePower);
+
+            yield return new WaitForSeconds(effect.dropDuration);
+            
+            // Resource flying
+
+            var targetDropZone = spot.transform.position;
+
+            rTrans.DOMove(targetDropZone, effect.dropFlyDuration);
+            
+            yield return new WaitForSeconds(effect.dropFlyDuration);
+            
+            resource.gameObject.SetActive(false);
+        }
+
+        private void Awake()
+        {
+            if (effectDefault == null) effectDefault = ScriptableObject.CreateInstance<ResourceEffectProfile>();
         }
 
         private void OnEnable()

@@ -6,6 +6,11 @@ namespace Game.Scripts.Effects
 {
     public class ResourceViewEffect : MonoBehaviour
     {
+        [Min(0)]
+        public float shakeDuration = 1f;
+        [Min(0)]
+        public float shakePower = 0.5f;
+        
         [Space]
         public ResourceView view = null;
 
@@ -19,10 +24,10 @@ namespace Game.Scripts.Effects
                 view.gameObject.SetActive(true);
                 
                 view.iconImage.rectTransform.DOComplete();
-                view.iconImage.rectTransform.DOShakeScale(1f, 0.5f);
+                view.iconImage.rectTransform.DOShakeScale(shakeDuration, shakePower);
             
                 view.amountText.rectTransform.DOComplete();
-                view.amountText.rectTransform.DOShakeScale(1f, 0.25f); 
+                view.amountText.rectTransform.DOShakeScale(shakeDuration, shakePower); 
             }
         }
         

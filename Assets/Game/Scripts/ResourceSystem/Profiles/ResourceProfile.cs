@@ -15,5 +15,8 @@ namespace Game.Scripts.ResourceSystem.Profiles
         [Space]
         [Multiline]
         public string description = "Good Luck, Mr. Gorsky!";
+
+        [Space]
+        public ResourceEffectProfile effect = null;
     }
 }

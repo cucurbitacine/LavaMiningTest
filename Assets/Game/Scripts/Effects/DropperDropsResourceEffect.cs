@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using DG.Tweening;
 using Game.Scripts.ResourceSystem.Entities;
+using Game.Scripts.ResourceSystem.Profiles;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,10 +9,19 @@ namespace Game.Scripts.Effects
 {
     public class DropperDropsResourceEffect : MonoBehaviour
     {
-        public float heightDrop = 2f;
-        public float radiusDrop = 2f;
-        public float duration = 0.5f;
+        public float shakeDuration = 0.5f;
+        public Vector3 shakeScalePower = new Vector3(1f, 0.2f, 1f);
 
+        [Space]
+        public Vector3 localPointDropZone = Vector3.zero;
+        [Min(0f)]
+        public float innerRadiusDropZone = 0f;
+        [Min(0f)]
+        public float outerRadiusDropZone = 1f;
+        
+        [Space]
+        public ResourceEffectProfile effectDefault = null;
+        
         [Space]
         public DropperBehaviour dropper = null;
         
@@ -20,26 +30,49 @@ namespace Game.Scripts.Effects
             StartCoroutine(_Animation(Instantiate(resource)));
         }
 
+        private Vector3 GetDropZonePoint()
+        {
+            var dir = Random.insideUnitCircle;
+            var radius = Random.value * (outerRadiusDropZone - innerRadiusDropZone) + innerRadiusDropZone;
+            var scatter = new Vector3(dir.x, 0f, dir.y) * radius;
+            
+            return dropper.transform.TransformPoint(localPointDropZone) + scatter; 
+        }
+        
         private IEnumerator _Animation(ResourceBehaviour resource)
         {
-            dropper.transform.DOComplete();
-            dropper.transform.DOShakeScale(duration, new Vector3(1f, 0.2f, 1f));
-                
-            var startPoint = transform.position + Vector3.up * heightDrop;
-            var dropPoint = transform.position +
-                            radiusDrop * Vector3.ProjectOnPlane(Random.onUnitSphere, Vector3.up).normalized;
-            var targetScale = resource.transform.localScale;
+            var effect = resource.profile.effect;
+            if (effect == null) effect = effectDefault;
+
+            // Dropper shaking
             
-            resource.collectable = false;
-            resource.transform.position = startPoint;
-            resource.transform.localScale = Vector3.one * 0.1f;
+            var dTrans = dropper.transform;
             
+            dTrans.DOComplete();
+            dTrans.DOShakeScale(shakeDuration, shakeScalePower);
             
-            resource.transform.DOJump(dropPoint, 1, 3, duration);
-            resource.transform.DOShakeScale(duration);
-            resource.transform.DOScale(targetScale, duration);
+            // Resource dropping
             
-            yield return new WaitForSeconds(duration);
+            var rTrans = resource.transform;
+
+            var startDrop = effect.GetDropStart(dTrans.position);
+            var targetDrop = effect.GetDropTarget(dTrans.position);
+
+            rTrans.position = startDrop;
+            rTrans.DOMove(targetDrop, effect.dropDuration);
+            rTrans.DOShakeScale(effect.dropDuration, effect.dropShakeScalePower);
+
+            yield return new WaitForSeconds(effect.dropDuration);
+            
+            // Resource flying
+
+            var targetDropZone = GetDropZonePoint();
+
+            rTrans.DOMove(targetDropZone, effect.dropFlyDuration);
+            
+            yield return new WaitForSeconds(effect.dropFlyDuration);
+            
+            yield return new WaitForSeconds(effect.dropIdleTimeout);
             
             resource.collectable = true;
         }
@@ -47,6 +80,8 @@ namespace Game.Scripts.Effects
         private void Awake()
         {
             if (dropper == null) dropper = GetComponent<DropperBehaviour>();
+
+            if (effectDefault == null) effectDefault = ScriptableObject.CreateInstance<ResourceEffectProfile>();
         }
 
         private void OnEnable()
@@ -57,6 +92,18 @@ namespace Game.Scripts.Effects
         private void OnDisable()
         {
             dropper.onResourceDropped.RemoveListener(AnimateDrop);
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (dropper != null)
+            {
+                var pointDropZone = dropper.transform.TransformPoint(localPointDropZone);
+                Gizmos.DrawWireSphere(pointDropZone, innerRadiusDropZone);
+                Gizmos.DrawWireSphere(pointDropZone, outerRadiusDropZone);
+            }
+            
+            
         }
     }
 }

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c68abf7b24747c386526c12a94b93f1, type: 3}
   m_Name: Resource Coin
   m_EditorClassIdentifier: 
-  displayGuid: 1111db86-669d-487b-be99-50fad6c417e8
+  displayGuid: cfa11880-5772-48d7-a144-a7d2a9870474
   nameResource: Coin
   icon: {fileID: 21300000, guid: bff7b5b6060d17948b50442091e1f004, type: 3}
   description: Good Luck, Mr. Gorsky!
+  effect: {fileID: 11400000, guid: e007114397ca0a64facd94945445af6c, type: 2}

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c68abf7b24747c386526c12a94b93f1, type: 3}
   m_Name: Resource Crystal
   m_EditorClassIdentifier: 
-  displayGuid: 73dfcdf6-68cf-47ad-a4bd-dd8b8d59691f
+  displayGuid: dd8d6c06-1cad-444a-95b5-791e8a9dd72f
   nameResource: Crystal
   icon: {fileID: 21300008, guid: bff7b5b6060d17948b50442091e1f004, type: 3}
   description: Good Luck, Mr. Gorsky!
+  effect: {fileID: 11400000, guid: e007114397ca0a64facd94945445af6c, type: 2}

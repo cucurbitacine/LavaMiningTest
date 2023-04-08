@@ -2,6 +2,7 @@
 using DG.Tweening;
 using Game.Scripts.ResourceSystem.Controllers;
 using Game.Scripts.ResourceSystem.Entities;
+using Game.Scripts.ResourceSystem.Profiles;
 using UnityEngine;
 
 namespace Game.Scripts.Effects
@@ -9,37 +10,43 @@ namespace Game.Scripts.Effects
     public class PlayerCollectsResourceEffect : MonoBehaviour
     {
         public InventoryController inventory = null;
-
-        public void AnimateReceive(ResourceBehaviour resource)
+        
+        [Space]
+        public ResourceEffectProfile effectDefault = null;
+        
+        public void AnimateCollect(ResourceBehaviour resource)
         {
             StartCoroutine(_Animation(resource));
         }
 
         private IEnumerator _Animation(ResourceBehaviour resource)
         {
-            var startScale = resource.transform.localScale;
-
-            var duration = 1f;
-
-            resource.transform.DOJump(transform.position, 1, 3, duration);
-            resource.transform.DOShakeScale(duration);
-            resource.transform.DOScale(Vector3.one * 0.1f, duration);
-
-            yield return new WaitForSeconds(duration);
-
-            resource.transform.localScale = startScale;
-            resource.gameObject.SetActive(false);
+            var effect = resource.profile.effect;
+            if (effect == null) effect = effectDefault;
             
+            var rTrans = resource.transform;
+            
+            rTrans.DOComplete();
+            rTrans.DOMove(inventory.transform.position, effect.collectDuration);
+
+            yield return new WaitForSeconds(effect.collectDuration);
+            
+            resource.gameObject.SetActive(false);
+        }
+
+        private void Awake()
+        {
+            if (effectDefault == null) effectDefault = ScriptableObject.CreateInstance<ResourceEffectProfile>();
         }
 
         private void OnEnable()
         {
-            inventory.onPutted.AddListener(AnimateReceive);
+            inventory.onPutted.AddListener(AnimateCollect);
         }
 
         private void OnDisable()
         {
-            inventory.onPutted.RemoveListener(AnimateReceive);
+            inventory.onPutted.RemoveListener(AnimateCollect);
         }
     }
 }

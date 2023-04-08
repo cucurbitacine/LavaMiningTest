@@ -314,8 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b661d030c1a42a8afb10612c675e862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  durationEffect: 1
   distributor: {fileID: 129947021}
+  effectDefault: {fileID: 0}
 --- !u!1 &168399640
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,6 +572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 621061998}
+  effectDefault: {fileID: 0}
 --- !u!1 &700757991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,6 +1001,31 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7867456784544554496, guid: acb21afdfeee8c843aea9d563ca505a8,
+        type: 3}
+      propertyPath: radiusDropZone
+      value: 1.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867456784544554496, guid: acb21afdfeee8c843aea9d563ca505a8,
+        type: 3}
+      propertyPath: innerRadiusDropZone
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867456784544554496, guid: acb21afdfeee8c843aea9d563ca505a8,
+        type: 3}
+      propertyPath: outerRadiusDropZone
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867456784544554496, guid: acb21afdfeee8c843aea9d563ca505a8,
+        type: 3}
+      propertyPath: localPointDropZone.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867456784544554496, guid: acb21afdfeee8c843aea9d563ca505a8,
+        type: 3}
+      propertyPath: localPointDropZone.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: acb21afdfeee8c843aea9d563ca505a8, type: 3}
 --- !u!1001 &920154530
@@ -1017,6 +1043,31 @@ PrefabInstance:
     - target: {fileID: 2215349343504231566, guid: 3265af673dbe5a442bd63dd8793f73ca,
         type: 3}
       propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183678529670621683, guid: 3265af673dbe5a442bd63dd8793f73ca,
+        type: 3}
+      propertyPath: radiusDropZone
+      value: 1.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183678529670621683, guid: 3265af673dbe5a442bd63dd8793f73ca,
+        type: 3}
+      propertyPath: innerRadiusDropZone
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183678529670621683, guid: 3265af673dbe5a442bd63dd8793f73ca,
+        type: 3}
+      propertyPath: outerRadiusDropZone
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183678529670621683, guid: 3265af673dbe5a442bd63dd8793f73ca,
+        type: 3}
+      propertyPath: localPointDropZone.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183678529670621683, guid: 3265af673dbe5a442bd63dd8793f73ca,
+        type: 3}
+      propertyPath: localPointDropZone.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4944148772558434758, guid: 3265af673dbe5a442bd63dd8793f73ca,
@@ -1315,6 +1366,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1380349721004844454, guid: acb2b7dc9fb57fb47a1f9b4de0a17e26,
+        type: 3}
+      propertyPath: radiusDropZone
+      value: 1.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 1380349721004844454, guid: acb2b7dc9fb57fb47a1f9b4de0a17e26,
+        type: 3}
+      propertyPath: innerRadiusDropZone
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1380349721004844454, guid: acb2b7dc9fb57fb47a1f9b4de0a17e26,
+        type: 3}
+      propertyPath: outerRadiusDropZone
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1380349721004844454, guid: acb2b7dc9fb57fb47a1f9b4de0a17e26,
+        type: 3}
+      propertyPath: localPointDropZone.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1380349721004844454, guid: acb2b7dc9fb57fb47a1f9b4de0a17e26,
+        type: 3}
+      propertyPath: localPointDropZone.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4101050761198396594, guid: acb2b7dc9fb57fb47a1f9b4de0a17e26,
         type: 3}
       propertyPath: m_Name
@@ -1860,6 +1936,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2178286226067697364, guid: bef4a618a1c582e44b0bc3bdf06c20a5,
+        type: 3}
+      propertyPath: innerRadiusDropZone
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178286226067697364, guid: bef4a618a1c582e44b0bc3bdf06c20a5,
+        type: 3}
+      propertyPath: outerRadiusDropZone
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178286226067697364, guid: bef4a618a1c582e44b0bc3bdf06c20a5,
+        type: 3}
+      propertyPath: localPointDropZone.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178286226067697364, guid: bef4a618a1c582e44b0bc3bdf06c20a5,
+        type: 3}
+      propertyPath: localPointDropZone.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178286226067697364, guid: bef4a618a1c582e44b0bc3bdf06c20a5,
+        type: 3}
+      propertyPath: localPointDropZone.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6021655800516463493, guid: bef4a618a1c582e44b0bc3bdf06c20a5,
         type: 3}
       propertyPath: m_Name

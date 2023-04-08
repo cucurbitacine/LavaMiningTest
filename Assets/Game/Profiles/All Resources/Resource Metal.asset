@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c68abf7b24747c386526c12a94b93f1, type: 3}
   m_Name: Resource Metal
   m_EditorClassIdentifier: 
-  displayGuid: 9c2d4be7-d219-43bf-8c9d-492f583bc05e
+  displayGuid: adf8f19c-4c65-4ab1-8a28-73361a2da0ab
   nameResource: Metal
   icon: {fileID: 21300012, guid: bff7b5b6060d17948b50442091e1f004, type: 3}
   description: Good Luck, Mr. Gorsky!
+  effect: {fileID: 11400000, guid: e007114397ca0a64facd94945445af6c, type: 2}
