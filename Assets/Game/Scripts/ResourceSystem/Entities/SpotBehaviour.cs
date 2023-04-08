@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.Scripts.ResourceSystem.Controllers;
 using Game.Scripts.ResourceSystem.Profiles;
+using Game.Scripts.Tools;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -29,7 +30,7 @@ namespace Game.Scripts.ResourceSystem.Entities
         
         protected override ResourceBehaviour GetResource()
         {
-            return profile.dropResourcePrefab;
+            return profile.dropResourceProfile.GetResource();
         }
         
         public void FillRequired(ref List<ResourceStack> outputRequired)
@@ -108,7 +109,10 @@ namespace Game.Scripts.ResourceSystem.Entities
 
         private void DisposeOfResources(List<ResourceBehaviour> resources)
         {
-            //
+            foreach (var resource in resources)
+            {
+                resource.Free();
+            }
         }
         
         private void OnEnable()

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a929ff69bf274819bafbd09818ab7540, type: 3}
   m_Name: Spot Meat
   m_EditorClassIdentifier: 
-  displayGuid: 70da21b3-3292-4196-8ee3-1233066301bf
+  displayGuid: 0cb1087b-bec1-4b4a-9a4d-e0e12545fbb3
   dropAmountResources: 1
-  dropResourcePrefab: {fileID: 3538013185028970698, guid: 16fa635cc9670dd4b82aed23a13478f9,
-    type: 3}
+  dropResourceProfile: {fileID: 11400000, guid: 5dc3f70092b5a804bbdf25a92db59632,
+    type: 2}
   timeoutDropping: 0.25
   durationProduction: 10
   timeoutProduction: 1

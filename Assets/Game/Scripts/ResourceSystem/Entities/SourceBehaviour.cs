@@ -1,5 +1,6 @@
 using System.Collections;
 using Game.Scripts.ResourceSystem.Profiles;
+using Game.Scripts.Tools;
 using UnityEngine;
 
 namespace Game.Scripts.ResourceSystem.Entities
@@ -24,7 +25,7 @@ namespace Game.Scripts.ResourceSystem.Entities
 
         protected override ResourceBehaviour GetResource()
         {
-            return profile.dropResourcePrefab;
+            return profile.dropResourceProfile.GetResource();
         }
         
         public bool Mine()

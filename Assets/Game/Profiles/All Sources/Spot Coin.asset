@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a929ff69bf274819bafbd09818ab7540, type: 3}
   m_Name: Spot Coin
   m_EditorClassIdentifier: 
-  displayGuid: 557bfb9f-b69a-4fc8-844a-9d5a50a336ca
+  displayGuid: bcbdeb78-86a0-4f45-885e-b20c6d57b698
   dropAmountResources: 3
-  dropResourcePrefab: {fileID: 7578461768307972373, guid: e3bc9dec502866e4aba42e98ea36b1df,
-    type: 3}
+  dropResourceProfile: {fileID: 11400000, guid: 38a407ec423fe3d488e8bd3c89f3c26d,
+    type: 2}
   timeoutDropping: 0.25
   durationProduction: 10
   timeoutProduction: 1

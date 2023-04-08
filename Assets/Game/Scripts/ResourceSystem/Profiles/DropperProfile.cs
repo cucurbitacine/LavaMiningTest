@@ -1,5 +1,4 @@
-﻿using Game.Scripts.ResourceSystem.Entities;
-using Game.Scripts.Tools;
+﻿using Game.Scripts.Tools;
 using UnityEngine;
 
 namespace Game.Scripts.ResourceSystem.Profiles
@@ -9,7 +8,7 @@ namespace Game.Scripts.ResourceSystem.Profiles
         [Header("Drop Settings")]
         [Min(0)]
         public int dropAmountResources = 1;
-        public ResourceBehaviour dropResourcePrefab = null;
+        public ResourceProfile dropResourceProfile = null;
         [Min(0f)]
         public float timeoutDropping = 0.2f;
     }

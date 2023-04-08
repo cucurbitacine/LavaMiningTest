@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c68abf7b24747c386526c12a94b93f1, type: 3}
   m_Name: Resource Wood
   m_EditorClassIdentifier: 
-  displayGuid: d46c8559-9f32-4a22-ae60-988a94c5d6ea
-  nameResource: Wood
+  displayGuid: 176ab395-1fdb-4208-a0a8-e4701f818fb0
+  prefab: {fileID: 8056074342101225583, guid: 73c9e2c177c3e4244a7ca8c97292c9b8, type: 3}
   icon: {fileID: 21300000, guid: e0eac6b76fdd842e88a7f8c75ecffaf4, type: 3}
+  nameResource: Wood
   description: Good Luck, Mr. Gorsky!
   effect: {fileID: 11400000, guid: e007114397ca0a64facd94945445af6c, type: 2}

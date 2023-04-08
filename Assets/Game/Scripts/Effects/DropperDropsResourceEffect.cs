@@ -27,7 +27,7 @@ namespace Game.Scripts.Effects
         
         public void AnimateDrop(ResourceBehaviour resource)
         {
-            StartCoroutine(_Animation(Instantiate(resource)));
+            StartCoroutine(_Animation(resource));
         }
 
         private Vector3 GetDropZonePoint()
