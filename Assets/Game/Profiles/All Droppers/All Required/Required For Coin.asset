@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0384b14ec49d4fe68f7fcf0140d72a46, type: 3}
+  m_Name: Required For Coin
+  m_EditorClassIdentifier: 
+  requiredResources:
+  - displayName: '[8] Wood'
+    amount: 8
+    profile: {fileID: 11400000, guid: 4daef6d15279fea498854f6fc0e15181, type: 2}
+  - displayName: '[4] Metal'
+    amount: 4
+    profile: {fileID: 11400000, guid: 88ed3601821c5dd48b5caeff5bd2bbe3, type: 2}
+  - displayName: '[2] Crystal'
+    amount: 2
+    profile: {fileID: 11400000, guid: c5b0e3485db434a4489e35689d9db493, type: 2}

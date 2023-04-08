@@ -35,6 +35,11 @@ namespace Game.Scripts.Tools
         {
             displayGuid = Guid.ToString();
         }
+
+        protected virtual void Awake()
+        {
+            DisplayGuid();
+        }
         
         protected virtual void OnValidate()
         {

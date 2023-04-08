@@ -11,16 +11,16 @@ namespace Game.Scripts.Effects
         public float durationEffect = 1;
         
         [Space]
-        public ResourceDistributor distributor = null;
+        public DistributorController distributor = null;
         
-        public void AnimationSend(ResourceEntity resource, ResourceSpotEntity spot)
+        public void AnimationSend(ResourceBehaviour resource, SpotBehaviour spot)
         {
             if (resource == null || spot == null) return;
             
             StartCoroutine(_Animation(resource, spot));
         }
 
-        private IEnumerator _Animation(ResourceEntity resource, ResourceSpotEntity spot)
+        private IEnumerator _Animation(ResourceBehaviour resource, SpotBehaviour spot)
         {
             var trg = resource.transform;
 

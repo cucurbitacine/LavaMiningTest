@@ -6,12 +6,12 @@ namespace Game.Scripts.UI
 {
     public abstract class InventoryView : MonoBehaviour
     {
-        public ResourceInventory inventory { get; private set; }
+        public InventoryController inventory { get; private set; }
 
-        protected abstract void Put(ResourceEntity resource);
-        protected abstract void Pick(ResourceEntity resource);
+        protected abstract void Put(ResourceBehaviour resource);
+        protected abstract void Pick(ResourceBehaviour resource);
 
-        public void Subscribe(ResourceInventory resourceInventory)
+        public void Subscribe(InventoryController resourceInventory)
         {
             inventory = resourceInventory;
 

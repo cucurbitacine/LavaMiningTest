@@ -9,7 +9,7 @@ namespace Game.Scripts.UI
 {
     public class PlayerInventoryView : InventoryView
     {
-        [SerializeField] private ResourceInventory playerInventory = null;
+        [SerializeField] private InventoryController playerInventory = null;
         
         [Space]
         public ResourceView resourceViewPrefab = null;
@@ -20,14 +20,14 @@ namespace Game.Scripts.UI
         private readonly Dictionary<ResourceProfile, ResourceView> _views =
             new Dictionary<ResourceProfile, ResourceView>();
 
-        protected override void Put(ResourceEntity resource)
+        protected override void Put(ResourceBehaviour resource)
         {
             var view = GetView(resource.profile);
 
             view.Increase();
         }
 
-        protected override void Pick(ResourceEntity resource)
+        protected override void Pick(ResourceBehaviour resource)
         {
             var view = GetView(resource.profile);
 

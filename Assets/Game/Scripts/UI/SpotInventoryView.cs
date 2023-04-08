@@ -7,7 +7,7 @@ namespace Game.Scripts.UI
 {
     public class SpotInventoryView : InventoryView
     {
-        public ResourceSpotEntity spot = null;
+        public SpotBehaviour spot = null;
 
         [Space]
         public Vector3 spotPositionOffset = Vector3.zero;
@@ -30,14 +30,14 @@ namespace Game.Scripts.UI
         private readonly Dictionary<ResourceProfile, ResourceView> _views =
             new Dictionary<ResourceProfile, ResourceView>();
         
-        protected override void Put(ResourceEntity resource)
+        protected override void Put(ResourceBehaviour resource)
         {
             var view = GetView(resource.profile);
 
             view.Decrease();
         }
 
-        protected override void Pick(ResourceEntity resource)
+        protected override void Pick(ResourceBehaviour resource)
         {
             var view = GetView(resource.profile);
 
@@ -93,10 +93,10 @@ namespace Game.Scripts.UI
         
         private void Start()
         {
-            foreach (var requiredResource in spot.profile.inputResourceProfile.requiredResources)
+            foreach (var resourceStack in spot.profile.inputRequiredProfile.requiredResources)
             {
-                var view = GetView(requiredResource.profile);
-                view.SetAmount(requiredResource.amount);
+                var view = GetView(resourceStack.profile);
+                view.SetAmount(resourceStack.amount);
             }
         }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using Game.Scripts.ResourceSystem.Profiles;
+﻿using Game.Scripts.ResourceSystem.Profiles;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;

@@ -8,14 +8,14 @@ namespace Game.Scripts.Effects
 {
     public class PlayerCollectsResourceEffect : MonoBehaviour
     {
-        public ResourceInventory inventory = null;
+        public InventoryController inventory = null;
 
-        public void AnimateReceive(ResourceEntity resource)
+        public void AnimateReceive(ResourceBehaviour resource)
         {
             StartCoroutine(_Animation(resource));
         }
 
-        private IEnumerator _Animation(ResourceEntity resource)
+        private IEnumerator _Animation(ResourceBehaviour resource)
         {
             var startScale = resource.transform.localScale;
 

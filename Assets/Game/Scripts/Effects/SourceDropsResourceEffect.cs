@@ -13,21 +13,17 @@ namespace Game.Scripts.Effects
         public float duration = 0.5f;
 
         [Space]
-        public ResourceSourceEntity source = null;
+        public DropperBehaviour dropper = null;
         
-        public void AnimateSend(ResourceSourceEntity source)
+        public void AnimateSend(ResourceBehaviour resource)
         {
-            for (var i = 0; i < source.profile.outputResourceAmount; i++)
-            {
-                var resource = Instantiate(source.profile.outputResourcePrefab);
-                StartCoroutine(_Animation(resource));
-            }
+            StartCoroutine(_Animation(Instantiate(resource)));
         }
 
-        private IEnumerator _Animation(ResourceEntity resource)
+        private IEnumerator _Animation(ResourceBehaviour resource)
         {
-            source.transform.DOComplete();
-            source.transform.DOShakeScale(duration, new Vector3(1f, 0.2f, 1f));
+            dropper.transform.DOComplete();
+            dropper.transform.DOShakeScale(duration, new Vector3(1f, 0.2f, 1f));
                 
             var startPoint = transform.position + Vector3.up * heightDrop;
             var dropPoint = transform.position +
@@ -48,14 +44,19 @@ namespace Game.Scripts.Effects
             resource.collectable = true;
         }
 
+        private void Awake()
+        {
+            if (dropper == null) dropper = GetComponent<DropperBehaviour>();
+        }
+
         private void OnEnable()
         {
-            source.onResourceDropped.AddListener(AnimateSend);
+            dropper.onResourceDropped.AddListener(AnimateSend);
         }
         
         private void OnDisable()
         {
-            source.onResourceDropped.RemoveListener(AnimateSend);
+            dropper.onResourceDropped.RemoveListener(AnimateSend);
         }
     }
 }
