@@ -21,7 +21,7 @@ namespace Game.Scripts.ResourceSystem.Controllers
         
         private Coroutine _distributing = null;
         
-        private readonly ComponentCache<Collider, SpotBehaviour> _cache = new ComponentCache<Collider, SpotBehaviour>();
+        private readonly ComponentCache<Collider, SpotBehaviour> _spotCache = new ComponentCache<Collider, SpotBehaviour>();
         private readonly Collider[] _overlap = new Collider[CountMaxOverlaps];
         
         private const ushort CountMaxOverlaps = 32;
@@ -40,7 +40,7 @@ namespace Game.Scripts.ResourceSystem.Controllers
 
                     for (var i = 0; i < count; i++)
                     {
-                        if (_cache.TryGetComponent(_overlap[i], out var spot))
+                        if (_spotCache.TryGetComponent(_overlap[i], out var spot))
                         {
                             if (spot.producting) continue;
                             

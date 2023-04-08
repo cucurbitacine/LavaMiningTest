@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Source Wood
   m_EditorClassIdentifier: 
   displayGuid: 7b951881-a868-4f07-8e72-2cec20700f78
-  dropAmountResources: 1
+  dropAmountResources: 4
   dropResourcePrefab: {fileID: 8056074342101225583, guid: 73c9e2c177c3e4244a7ca8c97292c9b8,
     type: 3}
   maxAmountResources: 8
   frequencyMining: 2
   timeoutMining: 4
-  resourcePerSecond: 1
+  resourcePerSecond: 1.6

@@ -20,7 +20,7 @@ namespace Game.Scripts.UI
         [Space]
         public RectTransform rect = null;
         public Transform contentRoot = null;
-        
+
         private bool _isOnScreen = false;
         private Vector2 _viewport = Vector2.zero;
         private Vector2 _screen = Vector2.zero;

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Source Metal
   m_EditorClassIdentifier: 
   displayGuid: 18aeaf9a-791d-432b-888c-f32f0d6d2540
-  dropAmountResources: 1
+  dropAmountResources: 2
   dropResourcePrefab: {fileID: 1018486320205159719, guid: 3042b412a72e212489189855fa762572,
     type: 3}
   maxAmountResources: 4
   frequencyMining: 1
   timeoutMining: 8
-  resourcePerSecond: 0.33333334
+  resourcePerSecond: 0.4

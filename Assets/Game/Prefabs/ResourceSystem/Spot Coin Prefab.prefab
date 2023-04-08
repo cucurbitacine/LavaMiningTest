@@ -118,12 +118,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   profile: {fileID: 11400000, guid: fc42a503b14624d4c86d6852407d7d5f, type: 2}
-  active: 1
+  producting: 0
   productionProgress: 0
-  onProductionStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  onProductionFinished:
+  active: 1
+  timeoutDropping: 0.1
+  onProductionChanged:
     m_PersistentCalls:
       m_Calls: []
   inventory: {fileID: 7475964180571799986}
@@ -175,5 +174,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: {fileID: 6021655800516463494}
-  viewPrefab: {fileID: 7240691933579709090, guid: 5fde82c6b07489441b7d82ea1f71826c,
+  spotViewPrefab: {fileID: 3097354416629443104, guid: 5fde82c6b07489441b7d82ea1f71826c,
     type: 3}

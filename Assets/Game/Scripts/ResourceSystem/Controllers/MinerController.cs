@@ -10,7 +10,8 @@ namespace Game.Scripts.ResourceSystem.Controllers
     public class MinerController : MonoBehaviour
     {
         public bool active = true;
-
+        public bool mining = false;
+        
         [Space]
         [Min(0f)]
         public float radiusMining = 2f;
@@ -25,7 +26,7 @@ namespace Game.Scripts.ResourceSystem.Controllers
         
         private Coroutine _mining = null;
         
-        private readonly ComponentCache<Collider, SourceBehaviour> _cache = new ComponentCache<Collider, SourceBehaviour>();
+        private readonly ComponentCache<Collider, SourceBehaviour> _sourceCache = new ComponentCache<Collider, SourceBehaviour>();
         private readonly Collider[] _overlap = new Collider[CountMaxOverlaps];
         
         private const ushort CountMaxOverlaps = 32;
@@ -34,6 +35,8 @@ namespace Game.Scripts.ResourceSystem.Controllers
         {
             while (true)
             {
+                mining = false;
+                
                 if (active && !player.moving)
                 {
                     var center = transform.position;
@@ -41,10 +44,14 @@ namespace Game.Scripts.ResourceSystem.Controllers
 
                     for (var i = 0; i < count; i++)
                     {
-                        if (_cache.TryGetComponent(_overlap[i], out var source))
+                        if (_sourceCache.TryGetComponent(_overlap[i], out var source))
                         {
-                            yield return new WaitForSeconds(1f / source.profile.frequencyMining);
+                            if (source.recovering) continue;
                             
+                            mining = true;
+                            
+                            if (source.waiting) continue;
+
                             if (source.Mine())
                             {
                                 onSourceMined.Invoke(source);

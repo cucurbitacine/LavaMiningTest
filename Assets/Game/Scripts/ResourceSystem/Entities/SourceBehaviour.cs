@@ -12,13 +12,16 @@ namespace Game.Scripts.ResourceSystem.Entities
         public bool active = true;
         [Min(0f)]
         public float timeoutDropping = 0.1f;
-        
-        [Space]
-        [Min(0)]
+
+        [Space] [Min(0)]
+        public bool waiting = false;
+        public bool recovering = false;
         public int amountResources = 0;
 
+        private float _timeoutWaitingDelta = 0f;
         private float _timeoutRecoveryDelta = 0f;
         
+        private Coroutine _waiting = null;
         private Coroutine _recovering = null;
 
         protected override ResourceBehaviour GetResource()
@@ -30,15 +33,24 @@ namespace Game.Scripts.ResourceSystem.Entities
         {
             if (!active) return false;
 
-            if (_timeoutRecoveryDelta > 0) return false;
-            
             if (amountResources <= 0) return false;
+            
+            if (_timeoutWaitingDelta > 0) return false;
+            
+            if (_timeoutRecoveryDelta > 0) return false;
 
-            amountResources--;
+            var dropAmount = amountResources >= profile.dropAmountResources
+                ? profile.dropAmountResources
+                : amountResources;
             
-            Dropping();
-            
-            if (amountResources == 0)
+            amountResources -= dropAmount;
+            Dropping(dropAmount);
+
+            if (amountResources > 0)
+            {
+                Waiting();
+            }
+            else
             {
                 Recovering();
             }
@@ -46,33 +58,26 @@ namespace Game.Scripts.ResourceSystem.Entities
             return true;
         }
 
+        private void Dropping(int amount)
+        {
+            StartCoroutine(_Dropping(amount));
+        }
+        
+        private void Waiting()
+        {
+            if (_waiting != null) StopCoroutine(_waiting);
+            _waiting = StartCoroutine(_Waiting());
+        } 
+        
         private void Recovering()
         {
             if (_recovering != null) StopCoroutine(_recovering);
             _recovering = StartCoroutine(_Recovering());
         }
 
-        private void Dropping()
+        private IEnumerator _Dropping(int amount)
         {
-            StartCoroutine(_Dropping());
-        }
-        
-        private IEnumerator _Recovering()
-        {
-            _timeoutRecoveryDelta = profile.timeoutMining;
-            
-            while (_timeoutRecoveryDelta > 0)
-            {
-                _timeoutRecoveryDelta -= Time.deltaTime;
-                yield return null;
-            }
-
-            amountResources = profile.maxAmountResources;
-        }
-
-        private IEnumerator _Dropping()
-        {
-            for (var i = 0; i < profile.dropAmountResources; i++)
+            for (var i = 0; i < amount; i++)
             {
                 Drop();
 
@@ -80,6 +85,38 @@ namespace Game.Scripts.ResourceSystem.Entities
             }
         }
         
+        private IEnumerator _Waiting()
+        {
+            waiting = true;
+            
+            _timeoutWaitingDelta = 1f / profile.frequencyMining;
+            
+            while (_timeoutWaitingDelta > 0)
+            {
+                _timeoutWaitingDelta -= Time.deltaTime;
+                yield return null;
+            }
+            
+            waiting = false;
+        }
+
+        private IEnumerator _Recovering()
+        {
+            recovering = true;
+            
+            _timeoutRecoveryDelta = profile.timeoutMining;
+
+            while (_timeoutRecoveryDelta > 0)
+            {
+                _timeoutRecoveryDelta -= Time.deltaTime;
+                yield return null;
+            }
+
+            amountResources = profile.maxAmountResources;
+            
+            recovering = false;
+        }
+
         private void OnEnable()
         {
             amountResources = profile.maxAmountResources;

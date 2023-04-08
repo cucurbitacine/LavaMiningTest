@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace Game.Scripts.Effects
 {
-    public class SourceDropsResourceEffect : MonoBehaviour
+    public class DropperDropsResourceEffect : MonoBehaviour
     {
         public float heightDrop = 2f;
         public float radiusDrop = 2f;
@@ -15,7 +15,7 @@ namespace Game.Scripts.Effects
         [Space]
         public DropperBehaviour dropper = null;
         
-        public void AnimateSend(ResourceBehaviour resource)
+        public void AnimateDrop(ResourceBehaviour resource)
         {
             StartCoroutine(_Animation(Instantiate(resource)));
         }
@@ -51,12 +51,12 @@ namespace Game.Scripts.Effects
 
         private void OnEnable()
         {
-            dropper.onResourceDropped.AddListener(AnimateSend);
+            dropper.onResourceDropped.AddListener(AnimateDrop);
         }
         
         private void OnDisable()
         {
-            dropper.onResourceDropped.RemoveListener(AnimateSend);
+            dropper.onResourceDropped.RemoveListener(AnimateDrop);
         }
     }
 }

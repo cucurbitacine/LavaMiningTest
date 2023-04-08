@@ -15,6 +15,7 @@ namespace Game.Scripts.ResourceSystem.Profiles
         [Min(0f)]
         public float timeoutMining = 12f;
 
+#if UNITY_EDITOR
         [Header("Source information - read only")]
         [SerializeField]
         [Tooltip("Show total speed of mining")]
@@ -23,10 +24,12 @@ namespace Game.Scripts.ResourceSystem.Profiles
         protected override void OnValidate()
         {
             base.OnValidate();
-            
-            var durationMining = maxAmountResources / frequencyMining;
-            var periodMining = durationMining + timeoutMining;
-            resourcePerSecond = dropAmountResources * maxAmountResources / periodMining;
+
+            var amountMiningCycle = Mathf.CeilToInt((float)maxAmountResources / dropAmountResources);
+            var durationMiningCycle = amountMiningCycle / frequencyMining;
+            var fullPeriodMiningCycle = durationMiningCycle + timeoutMining;
+            resourcePerSecond = maxAmountResources / fullPeriodMiningCycle;
         }
+#endif
     }
 }

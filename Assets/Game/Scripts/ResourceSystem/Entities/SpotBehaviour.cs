@@ -20,8 +20,7 @@ namespace Game.Scripts.ResourceSystem.Entities
         public float timeoutDropping = 0.1f;
         
         [Space]
-        public UnityEvent onProductionStarted = new UnityEvent();
-        public UnityEvent onProductionFinished = new UnityEvent();
+        public UnityEvent<bool> onProductionChanged = new UnityEvent<bool>();
 
         [Space]
         public InventoryController inventory = null;
@@ -79,7 +78,7 @@ namespace Game.Scripts.ResourceSystem.Entities
                     productionProgress = 0f;
 
                     producting = true;
-                    onProductionStarted.Invoke();
+                    onProductionChanged.Invoke(producting);
                     
                     while (time < profile.durationProduction)
                     {
@@ -91,7 +90,7 @@ namespace Game.Scripts.ResourceSystem.Entities
                     productionProgress = 1f;
                     
                     producting = false;
-                    onProductionFinished.Invoke();
+                    onProductionChanged.Invoke(producting);
 
                     productionProgress = 0f;
                     
