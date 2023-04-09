@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c68abf7b24747c386526c12a94b93f1, type: 3}
   m_Name: Resource Metal
   m_EditorClassIdentifier: 
-  displayGuid: 7b22d489-2c1b-4af7-a685-0bbd21315812
+  _guid: 220f3bff-b92f-40a7-acdb-69f9d0d1ff31
   prefab: {fileID: 1018486320205159719, guid: 3042b412a72e212489189855fa762572, type: 3}
   icon: {fileID: 21300000, guid: 7e082cc2cf2a4433d85e388c6bf94234, type: 3}
   nameResource: Metal

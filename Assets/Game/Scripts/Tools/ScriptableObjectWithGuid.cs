@@ -1,49 +1,79 @@
 using System;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace Game.Scripts.Tools
 {
     public abstract class ScriptableObjectWithGuid : ScriptableObject
     {
+        [StringReadOnly]
+        [SerializeField] private string _guid = string.Empty;
+
         public Guid Guid
         {
-            get
+            get => Guid.TryParse(_guid, out var guid) ? guid : (Guid = Guid.NewGuid());
+            private set
             {
-                if (string.IsNullOrWhiteSpace(_guid) || !Guid.TryParse(_guid, out var guid))
-                {
-                    guid = Guid.NewGuid();
-                    Guid = guid;
-                }
-
-                return guid;
+                _guid = value.ToString();
+#if UNITY_EDITOR
+                EditorUtility.SetDirty(this);
+#endif
             }
-            private set => _guid = value.ToString();
         }
-        
-        private string _guid = string.Empty;
-        [SerializeField] private string displayGuid = string.Empty;
 
         [ContextMenu("Update Guid")]
-        protected void UpdateGuid()
+        private void UpdateGuid()
         {
             Guid = Guid.NewGuid();
-            
-            DisplayGuid();
         }
-
-        private void DisplayGuid()
+        
+        private void Validate()
         {
-            displayGuid = Guid.ToString();
+            if (Guid == Guid.Empty) UpdateGuid();
         }
 
         protected virtual void Awake()
         {
-            DisplayGuid();
+            Validate();
         }
-        
+
+        protected virtual void Reset()
+        {
+            Validate();
+        }
+
         protected virtual void OnValidate()
         {
-            DisplayGuid();
+            Validate();
         }
     }
+
+    [AttributeUsage(AttributeTargets.Field)]
+    public class StringReadOnlyAttribute : PropertyAttribute
+    {
+    }
+
+#if UNITY_EDITOR
+    [CustomPropertyDrawer(typeof(StringReadOnlyAttribute))]
+    public class StringReadOnlyDrawer : PropertyDrawer
+    {
+        public override void OnGUI(Rect position, SerializedProperty prop, GUIContent label)
+        {
+            string labelStr = $"{label.text} (read only)";
+
+            switch (prop.propertyType)
+            {
+                case SerializedPropertyType.String:
+                    EditorGUI.TextField(position, labelStr, prop.stringValue);
+                    break;
+                default:
+                    EditorGUI.ObjectField(position, prop);
+                    break;
+            }
+        }
+    }
+#endif
 }

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5601f9f0b78148e99f49677fdd0d67d8, type: 3}
   m_Name: Resource Effect Default Profile
   m_EditorClassIdentifier: 
-  dropRadius: 0.5
-  dropHeight: 3
-  dropDuration: 0.5
+  dropRadius: 1
+  dropHeight: 5
+  dropDuration: 1
   dropShakeScalePower: {x: 1, y: 1, z: 1}
   dropFlyDuration: 0.5
   dropIdleTimeout: 0.2

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c68abf7b24747c386526c12a94b93f1, type: 3}
   m_Name: Resource Coin
   m_EditorClassIdentifier: 
-  displayGuid: a6f5f690-6122-4e8e-bbc8-fa2ec1bd990b
+  _guid: 4c2cf6e9-026d-4809-ad2b-d602a546682f
   prefab: {fileID: 7578461768307972373, guid: e3bc9dec502866e4aba42e98ea36b1df, type: 3}
   icon: {fileID: 21300000, guid: 53831ffd2c1064d07b3fcc10982b1e0d, type: 3}
   nameResource: Coin

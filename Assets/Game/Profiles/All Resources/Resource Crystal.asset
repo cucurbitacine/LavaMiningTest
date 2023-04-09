@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c68abf7b24747c386526c12a94b93f1, type: 3}
   m_Name: Resource Crystal
   m_EditorClassIdentifier: 
-  displayGuid: 99680b00-b887-4b68-8b38-a58b79260939
+  _guid: 080c15ae-eb20-4bc0-84a5-deb8eb4bf0ec
   prefab: {fileID: 2090711246852744686, guid: 45ca7af8e52f4d24389bc9f0f4c80f06, type: 3}
   icon: {fileID: 21300000, guid: f59401c5c79564fd1ae3bfb0876455a7, type: 3}
   nameResource: Crystal
