@@ -1,17 +1,24 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Game.Scripts.ResourceSystem.Profiles;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Game.Scripts.ResourceSystem.Entities
 {
     public abstract class DropperBehaviour : MonoBehaviour
     {
-        public UnityEvent<ResourceBehaviour> onResourceDropped = new UnityEvent<ResourceBehaviour>();
+        public UnityEvent<List<ResourceBehaviour>> onResourceDropped = new UnityEvent<List<ResourceBehaviour>>();
 
-        public void Drop()
+        public abstract DropperProfile GetProfile();
+
+        public TProfile GetProfile<TProfile>() where TProfile : DropperProfile
         {
-            onResourceDropped.Invoke(GetResource());
+            return GetProfile() as TProfile;
         }
         
-        protected abstract ResourceBehaviour GetResource();
+        public void Drop(List<ResourceBehaviour> droppedResources)
+        {
+            onResourceDropped.Invoke(droppedResources);
+        }
     }
 }

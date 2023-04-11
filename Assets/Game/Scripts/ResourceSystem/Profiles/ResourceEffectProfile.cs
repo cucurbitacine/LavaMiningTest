@@ -16,7 +16,7 @@ namespace Game.Scripts.ResourceSystem.Profiles
         [Min(0f)]
         public float dropFlyDuration = 0.5f;
         [Min(0f)]
-        public float dropIdleTimeout = 1f;
+        public float dropCollectableTimeout = 1f;
         
         [Header("Collecting by Player")]
         [Min(0)]

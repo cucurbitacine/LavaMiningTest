@@ -52,8 +52,6 @@ namespace Game.Scripts.ResourceSystem.Controllers
                             
                             player.View(source.transform.position - player.transform.position);
                             
-                            if (source.waiting) continue;
-
                             if (source.Mine())
                             {
                                 onSourceMined.Invoke(source);

@@ -28,11 +28,6 @@ namespace Game.Scripts.ResourceSystem.Entities
 
         private List<ResourceBehaviour> _cacheResources = new List<ResourceBehaviour>();
         
-        protected override ResourceBehaviour GetResource()
-        {
-            return profile.dropResourceProfile.GetResource();
-        }
-        
         public void FillRequired(ref List<ResourceStack> outputRequired)
         {
             outputRequired.Clear();
@@ -71,8 +66,6 @@ namespace Game.Scripts.ResourceSystem.Entities
                 {
                     inventory.Pick(profile.inputRequiredProfile.requiredResources, ref _cacheResources);
 
-                    DisposeOfResources(_cacheResources);
-                    
                     var time = 0f;
                     productionProgress = 0f;
 
@@ -92,15 +85,17 @@ namespace Game.Scripts.ResourceSystem.Entities
                     onProductionChanged.Invoke(producting);
 
                     productionProgress = 0f;
-                    
+
+                    var dropped = new List<ResourceBehaviour>();
                     for (var i = 0; i < profile.dropAmountResources; i++)
                     {
-                        Drop();
-                        
-                        yield return new WaitForSeconds(profile.timeoutDropping);
+                        dropped.Add(profile.dropResourceProfile.GetResource());
                     }
+                    Drop(dropped);
                     
                     yield return new WaitForSeconds(profile.timeoutProduction);
+                    
+                    DisposeOfResources(_cacheResources);
                 }
                 
                 yield return new WaitForFixedUpdate();
@@ -124,6 +119,11 @@ namespace Game.Scripts.ResourceSystem.Entities
         private void OnDisable()
         {
             if (_production != null) StopCoroutine(_production);
+        }
+
+        public override DropperProfile GetProfile()
+        {
+            return profile;
         }
     }
 }

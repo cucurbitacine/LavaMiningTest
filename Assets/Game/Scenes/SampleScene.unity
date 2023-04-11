@@ -611,8 +611,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 621061998}
   fileName: Save.txt
-  data:
-    stacks: []
   database: {fileID: 11400000, guid: 5fb4524f741711343840d84a96fcb558, type: 2}
 --- !u!1 &700757991
 GameObject:
@@ -1393,6 +1391,16 @@ PrefabInstance:
         type: 3}
       propertyPath: radiusDropZone
       value: 1.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 1380349721004844454, guid: acb2b7dc9fb57fb47a1f9b4de0a17e26,
+        type: 3}
+      propertyPath: innerRadiusDropZone
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1380349721004844454, guid: acb2b7dc9fb57fb47a1f9b4de0a17e26,
+        type: 3}
+      propertyPath: outerRadiusDropZone
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4101050761198396594, guid: acb2b7dc9fb57fb47a1f9b4de0a17e26,
         type: 3}

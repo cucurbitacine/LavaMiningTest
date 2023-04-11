@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using Game.Scripts.ResourceSystem.Entities;
 using Game.Scripts.ResourceSystem.Profiles;
@@ -25,56 +26,58 @@ namespace Game.Scripts.Effects
         [Space]
         public DropperBehaviour dropper = null;
         
-        public void AnimateDrop(ResourceBehaviour resource)
+        public void AnimateDrop(List<ResourceBehaviour> resources)
         {
-            StartCoroutine(_Animation(resource));
+            StartCoroutine(_Animation(resources));
         }
 
         private Vector3 GetDropZonePoint()
         {
             var dir = Random.insideUnitCircle;
             var radius = Random.value * (outerRadiusDropZone - innerRadiusDropZone) + innerRadiusDropZone;
-            var scatter = new Vector3(dir.x, 0f, dir.y) * radius;
+            var scatter = new Vector3(dir.x, 0f, dir.y).normalized * radius;
 
             return dropper.transform.position + localPointDropZone + scatter;
         }
         
-        private IEnumerator _Animation(ResourceBehaviour resource)
+        private IEnumerator _Animation(List<ResourceBehaviour> resources)
         {
-            var effect = resource.profile.effect;
-            if (effect == null) effect = effectDefault;
-
             // Dropper shaking
             
             var dTrans = dropper.transform;
             
             dTrans.DOComplete();
             dTrans.DOShakeScale(shakeDuration, shakeScalePower);
-            
-            // Resource dropping
-            
-            var rTrans = resource.transform;
 
-            var startDrop = effect.GetDropStart(dTrans.position);
-            var targetDrop = effect.GetDropTarget(dTrans.position);
-
-            rTrans.position = startDrop;
-            rTrans.DOMove(targetDrop, effect.dropDuration);
-            rTrans.DOShakeScale(effect.dropDuration, effect.dropShakeScalePower);
-
-            yield return new WaitForSeconds(effect.dropDuration);
+            resources.ForEach(r => r.gameObject.SetActive(false));
             
-            // Resource flying
+            foreach (var resource in resources)
+            {
+                resource.gameObject.SetActive(true);
+                
+                // Resource dropping
 
-            var targetDropZone = GetDropZonePoint();
+                var effect = resource.profile.effect;
+                if (effect == null) effect = effectDefault;
+            
+                var rTrans = resource.transform;
 
-            rTrans.DOMove(targetDropZone, effect.dropFlyDuration);
-            
-            yield return new WaitForSeconds(effect.dropFlyDuration);
-            
-            yield return new WaitForSeconds(effect.dropIdleTimeout);
-            
-            resource.collectable = true;
+                var startDrop = effect.GetDropStart(dTrans.position);
+                var targetDrop = effect.GetDropTarget(dTrans.position);
+
+                rTrans.position = startDrop;
+                rTrans.DOShakeScale(effect.dropDuration, effect.dropShakeScalePower);
+                rTrans.DOMove(targetDrop, effect.dropDuration).OnComplete(() =>
+                {
+                    var targetDropZone = GetDropZonePoint();
+                    rTrans.DOMove(targetDropZone, effect.dropFlyDuration).OnComplete(() =>
+                    {
+                        resource.Collectable(true, effect.dropCollectableTimeout);
+                    });
+                });
+
+                yield return new WaitForSeconds(dropper.GetProfile().timeoutDropping);
+            }
         }
 
         private void Awake()

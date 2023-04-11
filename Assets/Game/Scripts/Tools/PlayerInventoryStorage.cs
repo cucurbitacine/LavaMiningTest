@@ -17,66 +17,79 @@ namespace Game.Scripts.Tools
         public string fileName = "Save.txt";
         public string filePath => Path.Combine(Application.persistentDataPath, fileName);
 
-        public InventoryData data = default;
         public ResourceDatabase database = null;
         
         public async Task Load()
         {
-            Debug.Log("Loading");
+            Debug.Log("Loading Player Inventory...");
 
             var fileInfo = new FileInfo(filePath);
             if (fileInfo.Exists)
             {
-                var fileContent = await fileInfo.OpenText().ReadToEndAsync();
-
-                Debug.Log(fileContent);
-
-                data = JsonUtility.FromJson<InventoryData>(fileContent);
-                
-                foreach (var stack in data.stacks)
+                try
                 {
-                    if (Guid.TryParse(stack.guid, out var guid))
+                    var fileContent = await fileInfo.OpenText().ReadToEndAsync();
+                    var data = JsonUtility.FromJson<InventoryData>(fileContent);
+                
+                    foreach (var stack in data.stacks)
                     {
-                        var profile = database.profiles.FirstOrDefault(p => p.Guid == guid);
-
-                        if (profile != null)
+                        if (Guid.TryParse(stack.guid, out var guid))
                         {
-                            for (var i = 0; i < stack.amount; i++)
+                            var profile = database.profiles.FirstOrDefault(p => p.Guid == guid);
+
+                            if (profile != null)
                             {
-                                var res = profile.GetResource();
-                                res.gameObject.SetActive(false);
-                                inventory.Put(res);
+                                for (var i = 0; i < stack.amount; i++)
+                                {
+                                    var res = profile.GetResource();
+                                    res.gameObject.SetActive(false);
+                                    inventory.Put(res);
+                                }
                             }
                         }
                     }
+                    
+                    Debug.Log("Player Inventory Loaded!");
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Data Player Inventory was not Loaded! {e.Message}");
                 }
             }
-
-            Debug.Log("Loaded");
+            else
+            {
+                Debug.LogWarning("Data Player Inventory was not Found!");
+            }
         }
 
         public async Task Save()
         {
-            Debug.Log("Saving");
+            Debug.Log("Saving Player Inventory...");
 
-            data = InventoryData.GetData(inventory);
-            var json = JsonUtility.ToJson(data);
-            Debug.Log(json);
-            var fileInfo = new FileInfo(filePath);
-            if (fileInfo.Exists)
+            try
             {
-                var sw = new StreamWriter(filePath, false, Encoding.Default);
-                await sw.WriteAsync(json);
-                sw.Close();
-            }
-            else
-            {
-                var sw = fileInfo.CreateText();
-                await sw.WriteAsync(json);
-                sw.Close();
-            }
+                var data = InventoryData.GetData(inventory);
+                var json = JsonUtility.ToJson(data);
+                var fileInfo = new FileInfo(filePath);
+                if (fileInfo.Exists)
+                {
+                    var sw = new StreamWriter(filePath, false, Encoding.Default);
+                    await sw.WriteAsync(json);
+                    sw.Close();
+                }
+                else
+                {
+                    var sw = fileInfo.CreateText();
+                    await sw.WriteAsync(json);
+                    sw.Close();
+                }
             
-            Debug.Log("Saved");
+                Debug.Log("Player Inventory Saved!");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Player Inventory was not Saved! {e.Message}");
+            }
         }
 
         private async void OnEnable()

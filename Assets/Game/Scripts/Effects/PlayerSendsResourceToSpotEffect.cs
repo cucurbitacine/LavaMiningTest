@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using DG.Tweening;
 using Game.Scripts.ResourceSystem.Controllers;
 using Game.Scripts.ResourceSystem.Entities;
