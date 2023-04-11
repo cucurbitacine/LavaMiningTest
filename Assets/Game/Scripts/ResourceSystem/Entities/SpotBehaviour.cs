@@ -27,7 +27,7 @@ namespace Game.Scripts.ResourceSystem.Entities
         private Coroutine _production = null;
 
         private List<ResourceBehaviour> _cacheResources = new List<ResourceBehaviour>();
-        
+
         public void FillRequired(ref List<ResourceStack> outputRequired)
         {
             outputRequired.Clear();
@@ -51,7 +51,7 @@ namespace Game.Scripts.ResourceSystem.Entities
                 }
             }
         }
-        
+
         private IEnumerator _Production()
         {
             while (true)
