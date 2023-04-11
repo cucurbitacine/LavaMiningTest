@@ -17,5 +17,5 @@ MonoBehaviour:
   dropDuration: 1
   dropShakeScalePower: {x: 1, y: 1, z: 1}
   dropFlyDuration: 0.5
-  dropIdleTimeout: 0.2
+  dropCollectableTimeout: 0.2
   collectDuration: 0.25

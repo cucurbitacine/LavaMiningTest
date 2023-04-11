@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Game.Scripts.Player;
 using Game.Scripts.ResourceSystem.Entities;
 using Game.Scripts.ResourceSystem.Profiles;
 using Game.Scripts.Tools;
@@ -16,8 +17,7 @@ namespace Game.Scripts.ResourceSystem.Controllers
         public UnityEvent<ResourceBehaviour, SpotBehaviour> onDistributed = new UnityEvent<ResourceBehaviour, SpotBehaviour>();
 
         [Space]
-        public MinerController miner = null;
-        public InventoryController inventory = null;
+        public PlayerController player = null;
         
         private Coroutine _distributing = null;
         
@@ -29,8 +29,16 @@ namespace Game.Scripts.ResourceSystem.Controllers
         private List<ResourceStack> _cacheRequired = new List<ResourceStack>();
         private List<ResourceBehaviour> _cacheResources = new List<ResourceBehaviour>();
 
+        public MinerController miner => player.miner;
+        public InventoryController inventory => player.inventory;
+        
         private IEnumerator _Distributing()
         {
+            while (miner == null || inventory == null)
+            {
+                yield return null;
+            }
+            
             while (true)
             {
                 if (active && !miner.player.moving)

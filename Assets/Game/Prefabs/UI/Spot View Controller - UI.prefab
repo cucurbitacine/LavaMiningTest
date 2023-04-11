@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spot: {fileID: 0}
-  spotPositionOffset: {x: 0, y: 0, z: 0}
+  spotPositionOffset: {x: 0, y: 3, z: 0}
   viewportOffset: {x: 0, y: 0}
   screenOffset: {x: 0, y: 0}
   resourceViewPrefab: {fileID: 8961229444793401553, guid: c050429e0af305641bff03eecaba61f1,

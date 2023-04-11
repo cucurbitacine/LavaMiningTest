@@ -53,7 +53,7 @@ namespace Game.Scripts.Tools
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"Data Player Inventory was not Loaded! {e.Message}");
+                    Debug.LogError($"Data Player Inventory was not Loaded!\n{e.Message}");
                 }
             }
             else
@@ -88,7 +88,7 @@ namespace Game.Scripts.Tools
             }
             catch (Exception e)
             {
-                Debug.LogError($"Player Inventory was not Saved! {e.Message}");
+                Debug.LogError($"Player Inventory was not Saved!\n{e.Message}");
             }
         }
 
