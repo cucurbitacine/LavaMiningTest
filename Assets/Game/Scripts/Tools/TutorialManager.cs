@@ -10,14 +10,22 @@ namespace Game.Scripts.Tools
 {
     public class TutorialManager : MonoBehaviour
     {
-        public ArrowController arrow = null;
-        public PlayerController player = null;
-
+        public bool active = true;
+        
+        [Space]
         public ResourceProfile goal = null;
         public List<DropperBehaviour> droppers = new List<DropperBehaviour>();
 
+        [Space]
+        public ArrowController arrow = null;
+        public PlayerController player = null;
+        
         private const int NumberMaxRecursion = 128;
         
+        private List<DropperBehaviour> _targetDroppers = new List<DropperBehaviour>();
+
+        #region Static
+
         private static void GetDroppersByResource(List<DropperBehaviour> droppers, ResourceProfile goal, ref List<DropperBehaviour> result)
         {
             result.Clear();
@@ -92,21 +100,31 @@ namespace Game.Scripts.Tools
             }
         }
 
-        public List<DropperBehaviour> drops = new List<DropperBehaviour>();
+        #endregion
+
+        public void SwitchMode(bool value)
+        {
+            active = value;
+
+            arrow.SwitchMode(value);
+        }
         
         private void Update()
         {
-            drops.Clear();
-             GetTargetDropper(droppers, goal, player.inventory, ref drops);
+            if (active)
+            {
+                _targetDroppers.Clear();
+                GetTargetDropper(droppers, goal, player.inventory, ref _targetDroppers);
 
-             var targets = drops
-                 .Select(d => d.transform.position)
-                 .Select(v => Vector3.ProjectOnPlane(v, Vector3.up))
-                 .ToArray();
+                var targets = _targetDroppers
+                    .Select(d => d.transform.position)
+                    .Select(v => Vector3.ProjectOnPlane(v, Vector3.up))
+                    .ToArray();
 
-             var origin = Vector3.ProjectOnPlane(player.transform.position, Vector3.up);
+                var origin = Vector3.ProjectOnPlane(player.transform.position, Vector3.up);
              
-            arrow.Point(origin, targets);
+                arrow.Point(origin, targets);
+            }
         }
     }
 }

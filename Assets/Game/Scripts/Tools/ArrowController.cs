@@ -5,14 +5,30 @@ namespace Game.Scripts.Tools
 {
     public class ArrowController : MonoBehaviour
     {
+        public bool active = true;
+        
+        [Space]
         public Vector3 offset = Vector3.up;
 
+        [Space]
         public LineRenderer linePrefab = null;
         
         private readonly List<LineRenderer> _lines = new List<LineRenderer>();
 
+        public void SwitchMode(bool value)
+        {
+            active = value;
+
+            foreach (var line in _lines)
+            {
+                line.enabled = active;
+            }
+        }
+        
         public void Point(Vector3 origin, params Vector3[] targets)
         {
+            if (!active) return;
+            
             AddLine(targets.Length - _lines.Count);
 
             for (var i = 0; i < _lines.Count; i++)

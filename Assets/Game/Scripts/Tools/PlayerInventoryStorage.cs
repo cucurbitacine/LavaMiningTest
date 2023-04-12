@@ -6,19 +6,23 @@ using System.Threading.Tasks;
 using Game.Scripts.ResourceSystem.Controllers;
 using Game.Scripts.ResourceSystem.Profiles;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game.Scripts.Tools
 {
     public class PlayerInventoryStorage : MonoBehaviour
     {
+        public string playerName = "player_1";
+        
+        [Space]
         public InventoryController inventory = null;
-
-
-        public string fileName = "Save.txt";
-        public string filePath => Path.Combine(Application.persistentDataPath, fileName);
-
         public ResourceDatabase database = null;
         
+        public string sceneName => SceneManager.GetActiveScene().name;
+        public string dataName => "inventory";
+        public string fileName => $"{playerName}-{sceneName}-{dataName}.txt";
+        public string filePath => Path.Combine(Application.persistentDataPath, fileName);
+
         public async Task Load()
         {
             Debug.Log("Loading Player Inventory...");
