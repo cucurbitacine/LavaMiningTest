@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9593ee1a5bbe4f42b492750d5227f74e, type: 3}
   m_Name: Source Crystal
   m_EditorClassIdentifier: 
-  displayGuid: 519f9f55-e693-4556-aa9e-f5a86e20942f
+  _guid: 98ceaa63-be73-4724-8913-41dacfc18927
   dropAmountResources: 1
   dropResourceProfile: {fileID: 11400000, guid: c5b0e3485db434a4489e35689d9db493,
     type: 2}
-  timeoutDropping: 0.5
+  timeoutDropping: 0.1
   maxAmountResources: 2
   frequencyMining: 0.5
   timeoutMining: 16

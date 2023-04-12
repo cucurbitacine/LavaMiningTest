@@ -1,4 +1,3 @@
-using System;
 using Game.Scripts.ResourceSystem.Controllers;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,7 +6,7 @@ namespace Game.Scripts.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        public bool moving;
+        public bool moving = false;
         
         [Space]
         public NavMeshAgent agent = null;

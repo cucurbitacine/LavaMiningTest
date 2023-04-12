@@ -21,8 +21,6 @@ namespace Game.Scripts.Effects
             
             if (value > 0)
             {
-                view.gameObject.SetActive(true);
-                
                 view.iconImage.rectTransform.DOComplete();
                 view.iconImage.rectTransform.DOShakeScale(shakeDuration, shakePower);
             

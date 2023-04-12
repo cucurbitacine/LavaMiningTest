@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Game.Scripts.Player
 {
+    /// <summary>
+    /// Animation controller
+    /// </summary>
     [RequireComponent(typeof(Animator))]
     public class ModelAnimation : MonoBehaviour
     {
@@ -15,6 +18,7 @@ namespace Game.Scripts.Player
 
         private IEnumerator _Animation()
         {
+            // waiting player and miner controller  
             while (player == null || player.miner == null)
             {
                 yield return null;
@@ -22,6 +26,7 @@ namespace Game.Scripts.Player
 
             while (true)
             {
+                // update mining parameter
                 _animator.SetBool(Mining, player.miner.mining);
 
                 yield return null;
@@ -35,7 +40,6 @@ namespace Game.Scripts.Player
 
         private void OnEnable()
         {
-            
             if (player == null) player = GetComponentInParent<PlayerController>();
             
             if (_animation != null) StopCoroutine(_animation);

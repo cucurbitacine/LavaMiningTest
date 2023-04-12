@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Game.Scripts.ResourceSystem.Entities
 {
+    /// <summary>
+    /// Resource behaviour. Can be collected by someone
+    /// </summary>
     public class ResourceBehaviour : MonoBehaviour
     {
         public ResourceProfile profile = null;

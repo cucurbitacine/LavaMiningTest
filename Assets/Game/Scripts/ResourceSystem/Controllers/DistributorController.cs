@@ -9,10 +9,17 @@ using UnityEngine.Events;
 
 namespace Game.Scripts.ResourceSystem.Controllers
 {
+    /// <summary>
+    /// Controller of distributing resources from player's inventory to spot's inventory 
+    /// </summary>
     public class DistributorController : MonoBehaviour
     {
         public bool active = true;
 
+        [Space]
+        [Min(0f)]
+        public float timeoutDistributing = 0.15f;
+        
         [Space]
         public UnityEvent<ResourceBehaviour, SpotBehaviour> onDistributed = new UnityEvent<ResourceBehaviour, SpotBehaviour>();
 
@@ -21,50 +28,61 @@ namespace Game.Scripts.ResourceSystem.Controllers
         
         private Coroutine _distributing = null;
         
+        /// <summary>
+        /// Spot cache. Used to reduce the number of calls "GetComponent"
+        /// </summary>
         private readonly ComponentCache<Collider, SpotBehaviour> _spotCache = new ComponentCache<Collider, SpotBehaviour>();
         private readonly Collider[] _overlap = new Collider[CountMaxOverlaps];
         
         private const ushort CountMaxOverlaps = 32;
 
         private List<ResourceStack> _cacheRequired = new List<ResourceStack>();
-        private List<ResourceBehaviour> _cacheResources = new List<ResourceBehaviour>();
 
-        public MinerController miner => player.miner;
-        public InventoryController inventory => player.inventory;
+        public MinerController playerMiner => player?.miner;
+        public InventoryController playerInventory => player?.inventory;
         
         private IEnumerator _Distributing()
         {
-            while (miner == null || inventory == null)
+            // waiting miner and inventory
+            while (player == null || playerMiner == null || playerInventory == null)
             {
                 yield return null;
             }
             
             while (true)
             {
-                if (active && !miner.player.moving)
+                // work only if active and player is not moving
+                if (active && !player.moving)
                 {
+                    // make overlap
                     var center = transform.position;
-                    var count = Physics.OverlapSphereNonAlloc(center, miner.radiusMining, _overlap, miner.sourceLayers, miner.interaction);
+                    var count = Physics.OverlapSphereNonAlloc(center, playerMiner.radiusMining, _overlap, playerMiner.sourceLayers, playerMiner.interaction);
 
                     for (var i = 0; i < count; i++)
                     {
+                        // try get spot by its collider
                         if (_spotCache.TryGetComponent(_overlap[i], out var spot))
                         {
-                            if (spot.producting) continue;
+                            // if spot is busy - skip
+                            if (spot.producing) continue;
                             
+                            // get its required resource
                             spot.FillRequired(ref _cacheRequired);
 
+                            // looking through its required
                             foreach (var required in _cacheRequired)
                             {
                                 for (var j = 0; j < required.amount; j++)
                                 {
-                                    if (inventory.TryPick(required.profile, out var resource))
+                                    // try pick resources from player's inventory 
+                                    if (playerInventory.TryPick(required.profile, out var resource))
                                     {
+                                        // put picked resource to spot's inventory 
                                         spot.inventory.Put(resource);
                                         
                                         onDistributed.Invoke(resource, spot);
                                         
-                                        yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
+                                        yield return new WaitForSeconds(timeoutDistributing);
                                     }
                                 }
                             }

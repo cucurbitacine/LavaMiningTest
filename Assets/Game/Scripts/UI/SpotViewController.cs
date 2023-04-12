@@ -14,6 +14,9 @@ namespace Game.Scripts.UI
         public Slider progressSlider = null;
 
         private Coroutine _production = null;
+
+        private CanvasGroup _inventoryGroup = null;
+        private CanvasGroup _sliderGroup = null;
         
         public void Initialize(SpotBehaviour spotBehaviour)
         {
@@ -24,7 +27,7 @@ namespace Game.Scripts.UI
             inventoryView.spot = spot;
             inventoryView.Subscribe(spot.inventory);
             
-            progressSlider.gameObject.SetActive(false);
+            _sliderGroup.alpha = 0f;
         }
 
         public void Deinitialize()
@@ -38,9 +41,9 @@ namespace Game.Scripts.UI
 
         private void ProductionChange(bool start)
         {
-            inventoryView.contentRoot.gameObject.SetActive(!start);
-            progressSlider.gameObject.SetActive(start);
-
+            _inventoryGroup.alpha = start ? 0f : 1f;
+            _sliderGroup.alpha = start ? 1f : 0f;
+            
             if (_production != null) StopCoroutine(_production);
             
             if (start)
@@ -51,10 +54,26 @@ namespace Game.Scripts.UI
 
         private IEnumerator _Production()
         {
-            while (spot.producting)
+            while (spot.producing)
             {
                 progressSlider.value = spot.productionProgress;
                 yield return null;
+            }
+        }
+
+        private void Awake()
+        {
+            _inventoryGroup = inventoryView.contentRoot.GetComponent<CanvasGroup>();
+            _sliderGroup = progressSlider.GetComponent<CanvasGroup>();
+
+            if (_inventoryGroup == null)
+            {
+                _inventoryGroup = inventoryView.contentRoot.gameObject.AddComponent<CanvasGroup>();
+            }
+            
+            if (_sliderGroup == null)
+            {
+                _sliderGroup = progressSlider.gameObject.AddComponent<CanvasGroup>();
             }
         }
     }

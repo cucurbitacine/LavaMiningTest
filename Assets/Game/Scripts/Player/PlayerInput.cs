@@ -24,12 +24,17 @@ namespace Game.Scripts.Player
         public PlayerController player;
         public Camera cam;
 
+#if UNITY_EDITOR
+        /// <summary>
+        /// Get Input from editor
+        /// </summary>
         private void UpdateInputEditor()
         {
             move.x = Input.GetAxis("Horizontal") * Mathf.Abs(Input.GetAxisRaw("Horizontal"));
             move.y = 0f;
             move.z = Input.GetAxis("Vertical") * Mathf.Abs(Input.GetAxisRaw("Vertical"));
         }
+#endif
 
         private int UpdateInputTouch()
         {
@@ -60,9 +65,14 @@ namespace Game.Scripts.Player
             return touchCount;
         }
 
-        private Vector3 GetWorldDirection(Vector3 localDirection)
+        /// <summary>
+        /// Get direction relative camera 
+        /// </summary>
+        /// <param name="screenDirection"></param>
+        /// <returns></returns>
+        private Vector3 GetWorldDirection(Vector3 screenDirection)
         {
-            var direction = cam.transform.TransformDirection(localDirection);
+            var direction = cam.transform.TransformDirection(screenDirection);
             direction = Vector3.ProjectOnPlane(direction, Vector3.up);
             return direction;
         }

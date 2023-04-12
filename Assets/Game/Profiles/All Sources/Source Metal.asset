@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9593ee1a5bbe4f42b492750d5227f74e, type: 3}
   m_Name: Source Metal
   m_EditorClassIdentifier: 
-  displayGuid: 57397d65-de89-48cf-a32d-b39ce580dcb7
+  _guid: 427b033b-5ab5-4719-a12a-c087debcf0fe
   dropAmountResources: 1
   dropResourceProfile: {fileID: 11400000, guid: 88ed3601821c5dd48b5caeff5bd2bbe3,
     type: 2}
-  timeoutDropping: 0.5
+  timeoutDropping: 0.1
   maxAmountResources: 4
   frequencyMining: 1
   timeoutMining: 12

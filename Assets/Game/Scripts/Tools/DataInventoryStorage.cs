@@ -1,6 +1,6 @@
 using System;
+using System.Collections;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Game.Scripts.ResourceSystem.Controllers;
@@ -10,23 +10,33 @@ using UnityEngine.SceneManagement;
 
 namespace Game.Scripts.Tools
 {
-    public class PlayerInventoryStorage : MonoBehaviour
+    /// <summary>
+    /// Data inventory loader/saver
+    /// </summary>
+    public class DataInventoryStorage : MonoBehaviour
     {
-        public string playerName = "player_1";
+        public string inventoryName = "player_1";
+
+        [Space]
+        public bool autoSave = true;
+        public float autoSaveTime = 10f;
         
         [Space]
         public InventoryController inventory = null;
         public ResourceDatabase database = null;
         
+        private InventoryData _lastSavedData = default;
+        private Coroutine _autoSaving = null;
+        
         public string sceneName => SceneManager.GetActiveScene().name;
         public string dataName => "inventory";
-        public string fileName => $"{playerName}-{sceneName}-{dataName}.txt";
+        public string fileName => $"{inventoryName}-{sceneName}-{dataName}.txt";
         public string filePath => Path.Combine(Application.persistentDataPath, fileName);
 
         public async Task Load()
         {
-            Debug.Log("Loading Player Inventory...");
-
+            Debug.Log("Loading Inventory...");
+            
             var fileInfo = new FileInfo(filePath);
             if (fileInfo.Exists)
             {
@@ -37,43 +47,42 @@ namespace Game.Scripts.Tools
                 
                     foreach (var stack in data.stacks)
                     {
-                        if (Guid.TryParse(stack.guid, out var guid))
+                        // search resource profile by its guid
+                        if (Guid.TryParse(stack.guid, out var guid) && database.TryGetProfile(guid, out var profile))
                         {
-                            var profile = database.profiles.FirstOrDefault(p => p.Guid == guid);
-
-                            if (profile != null)
+                            // create and add required amount of resources 
+                            for (var i = 0; i < stack.amount; i++)
                             {
-                                for (var i = 0; i < stack.amount; i++)
-                                {
-                                    var res = profile.GetResource();
-                                    res.gameObject.SetActive(false);
-                                    inventory.Put(res);
-                                }
+                                var res = profile.GetResource();
+                                res.gameObject.SetActive(false);
+                                inventory.Put(res);
                             }
                         }
                     }
                     
-                    Debug.Log("Player Inventory Loaded!");
+                    Debug.Log("Inventory Loaded!");
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"Data Player Inventory was not Loaded!\n{e.Message}");
+                    Debug.LogError($"Data Inventory was not Loaded!\n{e.Message}");
                 }
             }
             else
             {
-                Debug.LogWarning("Data Player Inventory was not Found!");
+                Debug.LogWarning("Data Inventory was not Found!");
             }
         }
 
         public async Task Save()
         {
-            Debug.Log("Saving Player Inventory...");
+            Debug.Log("Saving Inventory...");
 
             try
             {
-                var data = InventoryData.GetData(inventory);
-                var json = JsonUtility.ToJson(data);
+                // keep data and create json 
+                _lastSavedData = InventoryData.GetData(inventory);
+                var json = JsonUtility.ToJson(_lastSavedData);
+                
                 var fileInfo = new FileInfo(filePath);
                 if (fileInfo.Exists)
                 {
@@ -88,25 +97,56 @@ namespace Game.Scripts.Tools
                     sw.Close();
                 }
             
-                Debug.Log("Player Inventory Saved!");
+                Debug.Log("Inventory Saved!");
             }
             catch (Exception e)
             {
-                Debug.LogError($"Player Inventory was not Saved!\n{e.Message}");
+                Debug.LogError($"Inventory was not Saved!\n{e.Message}");
             }
         }
 
+        private IEnumerator _AutoSaving()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(autoSaveTime);
+                
+                if (autoSave)
+                {
+                    Debug.Log("Autosaving...");
+                    
+                    // TODO add check current inventory data with last saved data
+                    // if current inventory data is not same as last saved data - save!
+
+                    var saveTask = Save();
+
+                    yield return new WaitUntil(() => saveTask.IsCompleted);
+                }
+            }
+        }
+        
         private async void OnEnable()
         {
+            if (autoSave)
+            {
+                if (_autoSaving != null) StopCoroutine(_autoSaving);
+                _autoSaving = StartCoroutine(_AutoSaving());
+            }
+            
             await Load();
         }
 
         private async void OnDisable()
         {
+            if (_autoSaving != null) StopCoroutine(_autoSaving);
+            
             await Save();
         }
     }
 
+    /// <summary>
+    /// Serializable data of inventory
+    /// </summary>
     [Serializable]
     public struct InventoryData
     {

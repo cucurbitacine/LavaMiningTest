@@ -5,8 +5,6 @@ namespace Game.Scripts.UI
 {
     public class JoystickInputView : MonoBehaviour
     {
-        public bool active = false;
-        
         [Space]
         [Range(0f, 1f)]
         public float alphaActive = 0.6f;

@@ -62,12 +62,12 @@ namespace Game.Scripts.Effects
             
                 var rTrans = resource.transform;
 
-                var startDrop = effect.GetDropStart(dTrans.position);
-                var targetDrop = effect.GetDropTarget(dTrans.position);
+                var startDrop = effect.GetDropAppearStartPoint(dTrans.position);
+                var targetDrop = effect.GetDropAppearRisenPoint(dTrans.position);
 
                 rTrans.position = startDrop;
-                rTrans.DOShakeScale(effect.dropDuration, effect.dropShakeScalePower);
-                rTrans.DOMove(targetDrop, effect.dropDuration).OnComplete(() =>
+                rTrans.DOShakeScale(effect.dropAppearDuration, effect.dropShakeScalePower);
+                rTrans.DOMove(targetDrop, effect.dropAppearDuration).OnComplete(() =>
                 {
                     var targetDropZone = GetDropZonePoint();
                     rTrans.DOMove(targetDropZone, effect.dropFlyDuration).OnComplete(() =>

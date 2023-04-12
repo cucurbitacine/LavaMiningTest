@@ -6,8 +6,21 @@ using UnityEngine;
 
 namespace Game.Scripts.Tools
 {
+    /*
+     * Resource Pool Manager
+     *
+     * Reusing already instantiated resources
+     *
+     * Pool to decrease amount of calls "Instantiate(...)"
+     */
+    
     public static class ResourcePoolManager
     {
+        /*
+         * Resources are stored grouped by their profiles.
+         * The boolean value indicates the resource is free or not.
+         */
+
         private static readonly Dictionary<ResourceProfile, Dictionary<ResourceBehaviour, bool>> Pool =
             new Dictionary<ResourceProfile, Dictionary<ResourceBehaviour, bool>>();
         
@@ -55,7 +68,9 @@ namespace Game.Scripts.Tools
             
             resource.gameObject.SetActive(false);
         }
-        
+
+        #region Extentions
+
         public static ResourceBehaviour GetResource(this ResourceProfile profile)
         {
             return GetResourceOfProfile(profile);
@@ -70,5 +85,7 @@ namespace Game.Scripts.Tools
         {
             FreeResourceOfProfile(resource.profile, resource);
         }
+
+        #endregion
     }
 }

@@ -5,6 +5,9 @@ using UnityEngine.Events;
 
 namespace Game.Scripts.ResourceSystem.Controllers
 {
+    /// <summary>
+    /// Controller of collecting resources on scene
+    /// </summary>
     public class CollectorController : MonoBehaviour
     {
         public bool active = true;
@@ -14,9 +17,13 @@ namespace Game.Scripts.ResourceSystem.Controllers
         public float radiusCollecting = 3f;
         public LayerMask resourceLayers = 1;
         public QueryTriggerInteraction interaction = QueryTriggerInteraction.UseGlobal;
+        
         [Space]
         public UnityEvent<ResourceBehaviour> onResourceCollected = new UnityEvent<ResourceBehaviour>();
         
+        /// <summary>
+        /// Resource cache. Used to reduce the number of calls "GetComponent"
+        /// </summary>
         private readonly ComponentCache<Collider, ResourceBehaviour> _cache = new ComponentCache<Collider, ResourceBehaviour>();
         private readonly Collider[] _overlap = new Collider[CountMaxOverlaps];
 
@@ -24,24 +31,27 @@ namespace Game.Scripts.ResourceSystem.Controllers
         
         public void Collect(ResourceBehaviour resource)
         {
-            resource.collectable = false;
+            if (resource.collectable)
+            {
+                resource.collectable = false;
             
-            onResourceCollected.Invoke(resource);
+                onResourceCollected.Invoke(resource);  
+            }
         }
         
         private void Collecting()
         {
+            // make overlap 
             var center = transform.position;
             var count = Physics.OverlapSphereNonAlloc(center, radiusCollecting, _overlap, resourceLayers, interaction);
 
+            // looking resources
             for (var i = 0; i < count; i++)
             {
+                // try get resource by its collider
                 if (_cache.TryGetComponent(_overlap[i], out var res))
                 {
-                    if (res.collectable)
-                    {
-                        Collect(res);
-                    }
+                    Collect(res);
                 }
             }
         }

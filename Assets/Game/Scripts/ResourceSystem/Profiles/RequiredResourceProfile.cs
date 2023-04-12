@@ -4,12 +4,16 @@ using UnityEngine;
 
 namespace Game.Scripts.ResourceSystem.Profiles
 {
+    /// <summary>
+    /// Profile with information of required resources
+    /// </summary>
     [CreateAssetMenu(menuName = GameManager.ResourceSystem + ProfileName, fileName = ProfileName, order = 0)]
     public class RequiredResourceProfile : ScriptableObject
     {
+        [Tooltip("Resources and its amount")]
         public List<ResourceStack> requiredResources = new List<ResourceStack>();
 
-        private const string ProfileName = "Required Resources";
+        private const string ProfileName = "Requirements";
 
         private void OnValidate()
         {

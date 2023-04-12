@@ -75,5 +75,10 @@ namespace Game.Scripts.UI
         {
             onAmountChanged.RemoveListener(UpdateView);
         }
+
+        private void OnValidate()
+        {
+            UpdateView(amount);
+        }
     }
 }

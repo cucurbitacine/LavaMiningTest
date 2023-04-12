@@ -35,14 +35,14 @@ namespace Game.Scripts.Effects
             
             var rTrans = resource.transform;
 
-            var startDrop = effect.GetDropStart(initPosition);
-            var targetDrop = effect.GetDropTarget(initPosition);
+            var startDrop = effect.GetDropAppearStartPoint(initPosition);
+            var targetDrop = effect.GetDropAppearRisenPoint(initPosition);
 
             rTrans.position = startDrop;
-            rTrans.DOMove(targetDrop, effect.dropDuration);
-            rTrans.DOShakeScale(effect.dropDuration, effect.dropShakeScalePower);
+            rTrans.DOMove(targetDrop, effect.dropAppearDuration);
+            rTrans.DOShakeScale(effect.dropAppearDuration, effect.dropShakeScalePower);
 
-            yield return new WaitForSeconds(effect.dropDuration);
+            yield return new WaitForSeconds(effect.dropAppearDuration);
             
             // Resource flying
 

@@ -7,6 +7,11 @@ using UnityEditor;
 
 namespace Game.Scripts.Tools
 {
+    /*
+     * ScriptableObject keeps unique Guid as string
+     * It allows identify any ScriptableObject by Guid
+     */
+    
     public abstract class ScriptableObjectWithGuid : ScriptableObject
     {
         [StringReadOnly]

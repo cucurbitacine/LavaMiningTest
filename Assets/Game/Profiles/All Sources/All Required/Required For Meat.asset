@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Required For Meat
   m_EditorClassIdentifier: 
   requiredResources:
-  - displayName: '[5] Coin'
-    amount: 5
+  - displayName: '[3] Coin'
+    amount: 3
     profile: {fileID: 11400000, guid: 38a407ec423fe3d488e8bd3c89f3c26d, type: 2}

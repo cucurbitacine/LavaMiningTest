@@ -2,6 +2,10 @@ using UnityEngine;
 
 namespace Game.Scripts.Player
 {
+    /*
+     * PlayerModelLoader can be used later by some scene loader to load the model you need
+     */
+    
     [RequireComponent(typeof(PlayerController))]
     public class PlayerModelLoader : MonoBehaviour
     {
@@ -12,26 +16,25 @@ namespace Game.Scripts.Player
         public int numberModelDefault = 0;
         public GameObject[] modelPrefabs = null;
 
-        [Space]
-        public PlayerController player = null;
+        private PlayerController _player = null;
 
-        public void Load(int number)
+        public void LoadModel(int number)
         {
             if (number < 0 || modelPrefabs.Length <= number) number = numberModelDefault;
             
             if (currentModel != null) Destroy(currentModel);
 
-            currentModel = Instantiate(modelPrefabs[number], player.transform, false);
+            currentModel = Instantiate(modelPrefabs[number], _player.transform, false);
         }
         
         private void Awake()
         {
-            player = GetComponent<PlayerController>();
+            _player = GetComponent<PlayerController>();
         }
 
         private void OnEnable()
         {
-            if (loadOnEnable) Load(numberModelDefault);
+            if (loadOnEnable) LoadModel(numberModelDefault);
         }
 
         private void OnValidate()

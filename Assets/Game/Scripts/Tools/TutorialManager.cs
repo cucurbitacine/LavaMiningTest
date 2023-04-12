@@ -8,6 +8,9 @@ using UnityEngine;
 
 namespace Game.Scripts.Tools
 {
+    /// <summary>
+    /// Tutorial manager which determine target sources or spots by goal resource 
+    /// </summary>
     public class TutorialManager : MonoBehaviour
     {
         public bool active = true;
@@ -17,7 +20,7 @@ namespace Game.Scripts.Tools
         public List<DropperBehaviour> droppers = new List<DropperBehaviour>();
 
         [Space]
-        public ArrowController arrow = null;
+        public LinesController lines = null;
         public PlayerController player = null;
         
         private const int NumberMaxRecursion = 128;
@@ -26,6 +29,12 @@ namespace Game.Scripts.Tools
 
         #region Static
 
+        /// <summary>
+        /// Get droppers which drops goal resource
+        /// </summary>
+        /// <param name="droppers"></param>
+        /// <param name="goal"></param>
+        /// <param name="result"></param>
         private static void GetDroppersByResource(List<DropperBehaviour> droppers, ResourceProfile goal, ref List<DropperBehaviour> result)
         {
             result.Clear();
@@ -39,6 +48,12 @@ namespace Game.Scripts.Tools
             }
         }
         
+        /// <summary>
+        /// Get droppers which can be used right now
+        /// </summary>
+        /// <param name="droppers"></param>
+        /// <param name="inventory"></param>
+        /// <param name="result"></param>
         private static void GetReadyDroppers(List<DropperBehaviour> droppers, InventoryController inventory, ref List<DropperBehaviour> result)
         {
             result.Clear();
@@ -62,6 +77,11 @@ namespace Game.Scripts.Tools
             }
         }
 
+        /// <summary>
+        /// Get list of required resources for droppers
+        /// </summary>
+        /// <param name="droppers"></param>
+        /// <param name="result"></param>
         private static void GetRequiredForDroppers(List<DropperBehaviour> droppers, ref List<ResourceStack> result)
         {
             result.Clear();
@@ -74,6 +94,14 @@ namespace Game.Scripts.Tools
             }
         }
 
+        /// <summary>
+        /// Get Target Dropper by goal resource
+        /// </summary>
+        /// <param name="droppers"></param>
+        /// <param name="goal"></param>
+        /// <param name="inventory"></param>
+        /// <param name="result"></param>
+        /// <param name="indexRecursion"></param>
         private static void GetTargetDropper(List<DropperBehaviour> droppers, ResourceProfile goal, InventoryController inventory, ref List<DropperBehaviour> result, int indexRecursion = 0)
         {
             if (indexRecursion > NumberMaxRecursion) return;
@@ -106,13 +134,14 @@ namespace Game.Scripts.Tools
         {
             active = value;
 
-            arrow.SwitchMode(value);
+            lines.SwitchMode(value);
         }
         
         private void Update()
         {
             if (active)
             {
+                // get targets
                 _targetDroppers.Clear();
                 GetTargetDropper(droppers, goal, player.inventory, ref _targetDroppers);
 
@@ -123,7 +152,8 @@ namespace Game.Scripts.Tools
 
                 var origin = Vector3.ProjectOnPlane(player.transform.position, Vector3.up);
              
-                arrow.Point(origin, targets);
+                // draw lines
+                lines.Point(origin, targets);
             }
         }
     }

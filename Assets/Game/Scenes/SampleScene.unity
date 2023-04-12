@@ -314,6 +314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
+  timeoutDistributing: 0.15
   onDistributed:
     m_PersistentCalls:
       m_Calls: []
@@ -920,6 +921,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7349592693265508397, guid: acb21afdfeee8c843aea9d563ca505a8,
+        type: 3}
+      propertyPath: timeoutResetMining
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7867456784544554496, guid: acb21afdfeee8c843aea9d563ca505a8,
         type: 3}
       propertyPath: shakeDuration
@@ -958,6 +964,11 @@ PrefabInstance:
         type: 3}
       propertyPath: radiusDropZone
       value: 1.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363266012918020645, guid: 3265af673dbe5a442bd63dd8793f73ca,
+        type: 3}
+      propertyPath: timeoutResetMining
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4944148772558434758, guid: 3265af673dbe5a442bd63dd8793f73ca,
         type: 3}
@@ -1274,6 +1285,11 @@ PrefabInstance:
         type: 3}
       propertyPath: outerRadiusDropZone
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101050761198396593, guid: acb2b7dc9fb57fb47a1f9b4de0a17e26,
+        type: 3}
+      propertyPath: timeoutResetMining
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4101050761198396594, guid: acb2b7dc9fb57fb47a1f9b4de0a17e26,
         type: 3}
@@ -1855,7 +1871,6 @@ MonoBehaviour:
   modelPrefabs:
   - {fileID: 7355983617757109094, guid: f2474060af5a048469e58c36fbf72a98, type: 3}
   - {fileID: 7355983617757109094, guid: 877c751669b24474d9a5b4d429e9e7ef, type: 3}
-  player: {fileID: 1362245442}
 --- !u!224 &1411987897 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1028590207825921095, guid: ca9f15bc52415e14cab3a07f33124fa7,
@@ -1931,7 +1946,7 @@ MonoBehaviour:
   - {fileID: 1768343282}
   - {fileID: 840234495}
   - {fileID: 7548553292304204218}
-  arrow: {fileID: 1576850639}
+  lines: {fileID: 1576850639}
   player: {fileID: 1362245442}
 --- !u!224 &1595744587 stripped
 RectTransform:
@@ -1968,7 +1983,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1736c20479c545428891d063031f537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: player_1
+  inventoryName: player_1
+  autoSave: 1
+  autoSaveTime: 10
   inventory: {fileID: 621061998}
   database: {fileID: 11400000, guid: 5fb4524f741711343840d84a96fcb558, type: 2}
 --- !u!4 &1663816528

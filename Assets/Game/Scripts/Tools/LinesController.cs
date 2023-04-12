@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Scripts.Tools
 {
-    public class ArrowController : MonoBehaviour
+    public class LinesController : MonoBehaviour
     {
         public bool active = true;
         
